@@ -1,0 +1,1119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml">
+        <edmx:Include Alias="HTML5" Namespace="com.sap.vocabularies.HTML5.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="WholefoodsService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Plants" EntityType="WholefoodsService.Plants">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Plants"/>
+                </EntitySet>
+                <EntitySet Name="Materials" EntityType="WholefoodsService.Materials">
+                    <NavigationPropertyBinding Path="MTART" Target="MaterialTypes"/>
+                    <NavigationPropertyBinding Path="MATKL" Target="MaterialGroups"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Materials"/>
+                </EntitySet>
+                <EntitySet Name="MaterialGroups" EntityType="WholefoodsService.MaterialGroups">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="MaterialGroups"/>
+                </EntitySet>
+                <EntitySet Name="MaterialTypes" EntityType="WholefoodsService.MaterialTypes">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="MaterialTypes"/>
+                </EntitySet>
+                <EntitySet Name="BPGeneral" EntityType="WholefoodsService.BPGeneral">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="BPGeneral"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Plants">
+                <Key>
+                    <PropertyRef Name="WERKS"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="WERKS" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="NAME1" Type="Edm.String" MaxLength="30"/>
+                <Property Name="STRAS" Type="Edm.String" MaxLength="30"/>
+                <Property Name="PSTLZ" Type="Edm.String" MaxLength="10"/>
+                <Property Name="ORT01" Type="Edm.String" MaxLength="25"/>
+                <Property Name="LANDX" Type="Edm.String" MaxLength="15"/>
+                <Property Name="CNTACT" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="WholefoodsService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="WholefoodsService.Plants"/>
+            </EntityType>
+            <EntityType Name="Materials">
+                <Key>
+                    <PropertyRef Name="MATNR"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="MATNR" Type="Edm.String" MaxLength="18" Nullable="false"/>
+                <NavigationProperty Name="MTART" Type="WholefoodsService.MaterialTypes">
+                    <ReferentialConstraint Property="MTART_MTART" ReferencedProperty="MTART"/>
+                </NavigationProperty>
+                <Property Name="MTART_MTART" Type="Edm.String" MaxLength="9"/>
+                <NavigationProperty Name="MATKL" Type="WholefoodsService.MaterialGroups">
+                    <ReferentialConstraint Property="MATKL_MATKL" ReferencedProperty="MATKL"/>
+                </NavigationProperty>
+                <Property Name="MATKL_MATKL" Type="Edm.String" MaxLength="9"/>
+                <Property Name="MAKTX" Type="Edm.String" MaxLength="40"/>
+                <Property Name="UOM" Type="Edm.String" MaxLength="2"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="WholefoodsService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="WholefoodsService.Materials"/>
+            </EntityType>
+            <EntityType Name="MaterialGroups">
+                <Key>
+                    <PropertyRef Name="MATKL"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="MATKL" Type="Edm.String" MaxLength="9" Nullable="false"/>
+                <Property Name="MATKLTX" Type="Edm.String" MaxLength="40"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="WholefoodsService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="WholefoodsService.MaterialGroups"/>
+            </EntityType>
+            <EntityType Name="MaterialTypes">
+                <Key>
+                    <PropertyRef Name="MTART"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="MTART" Type="Edm.String" MaxLength="9" Nullable="false"/>
+                <Property Name="MTARTTX" Type="Edm.String" MaxLength="40"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="WholefoodsService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="WholefoodsService.MaterialTypes"/>
+            </EntityType>
+            <EntityType Name="BPGeneral">
+                <Key>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="PARTNER" Type="Edm.String" MaxLength="10"/>
+                <Property Name="BPTYPE" Type="Edm.String" MaxLength="1"/>
+                <Property Name="NAME" Type="Edm.String" MaxLength="50"/>
+                <Property Name="STRAS" Type="Edm.String" MaxLength="30"/>
+                <Property Name="PSTLZ" Type="Edm.String" MaxLength="10"/>
+                <Property Name="ORT01" Type="Edm.String" MaxLength="25"/>
+                <Property Name="LANDX" Type="Edm.String" MaxLength="15"/>
+                <Property Name="CNTACT" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="WholefoodsService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="WholefoodsService.BPGeneral"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Plants"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="WholefoodsService.Plants"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Materials"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="WholefoodsService.Materials"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialGroups"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="WholefoodsService.MaterialGroups"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialTypes"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="WholefoodsService.MaterialTypes"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.BPGeneral"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="WholefoodsService.BPGeneral"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Plants"/>
+                <ReturnType Type="WholefoodsService.Plants"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Materials"/>
+                <ReturnType Type="WholefoodsService.Materials"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialGroups"/>
+                <ReturnType Type="WholefoodsService.MaterialGroups"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialTypes"/>
+                <ReturnType Type="WholefoodsService.MaterialTypes"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.BPGeneral"/>
+                <ReturnType Type="WholefoodsService.BPGeneral"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Plants"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="WholefoodsService.Plants"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.Materials"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="WholefoodsService.Materials"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialGroups"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="WholefoodsService.MaterialGroups"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.MaterialTypes"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="WholefoodsService.MaterialTypes"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="WholefoodsService.BPGeneral"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="WholefoodsService.BPGeneral"/>
+            </Action>
+            <Annotations Target="WholefoodsService.Plants">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>WERKS</PropertyPath>
+                        <PropertyPath>NAME1</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WERKS"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="NAME1"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            <Annotation Term="HTML5.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="40%"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="STRAS"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            <Annotation Term="HTML5.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="40%"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.PresentationVariant">
+                    <Record Type="UI.PresentationVariantType">
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record Type="Common.SortOrderType">
+                                    <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                    <PropertyValue Property="Descending" Bool="false"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="{i18n>plant}"/>
+                            <PropertyValue Property="TypeNamePlural" String="{i18n>plants}"/>
+                                <PropertyValue Property="Title">
+                                    <Record Type="UI.DataField">
+                                        <PropertyValue Property="Value" Path="NAME1"/>
+                                    </Record>
+                                </PropertyValue>
+                                <PropertyValue Property="Description">
+                                    <Record Type="UI.DataField">
+                                        <PropertyValue Property="Value" Path="STRAS"/>
+                                    </Record>
+                                </PropertyValue>
+                                <PropertyValue Property="TypeImageUrl" String="sap-icon://company-view"/>
+                            </Record>
+                        </Annotation>
+                        <Annotation Term="UI.Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{i18n>basicInfo}"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="{i18n>administrativeData}"/>
+                                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AdministrativeData"/>
+                                        </Record>
+                                    </Collection>
+                                </Annotation>
+                                <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                                    <Record Type="UI.FieldGroupType">
+                                        <PropertyValue Property="Data">
+                                            <Collection>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="NAME1"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="PSTLZ"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="ORT01"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="STRAS"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="LANDX"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="CNTACT"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Annotation>
+                                <Annotation Term="UI.FieldGroup" Qualifier="AdministrativeData">
+                                    <Record Type="UI.FieldGroupType">
+                                        <PropertyValue Property="Data">
+                                            <Collection>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="createdBy"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="createdAt"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="modifiedBy"/>
+                                                </Record>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="modifiedAt"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Annotation>
+                            </Annotations>
+                            <Annotations Target="WholefoodsService.EntityContainer/Plants">
+                                <Annotation Term="UI.PresentationVariant">
+                                    <Record Type="UI.PresentationVariantType">
+                                        <PropertyValue Property="SortOrder">
+                                            <Collection>
+                                                <Record Type="Common.SortOrderType">
+                                                    <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                    <PropertyValue Property="Descending" Bool="false"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                        <PropertyValue Property="Visualizations">
+                                            <Collection>
+                                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Annotation>
+                                <Annotation Term="Common.DraftRoot">
+                                    <Record Type="Common.DraftRootType">
+                                        <PropertyValue Property="ActivationAction" String="WholefoodsService.draftActivate"/>
+                                        <PropertyValue Property="EditAction" String="WholefoodsService.draftEdit"/>
+                                        <PropertyValue Property="PreparationAction" String="WholefoodsService.draftPrepare"/>
+                                    </Record>
+                                </Annotation>
+                            </Annotations>
+                            <Annotations Target="WholefoodsService.Plants/createdAt">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                </Annotations>
+                                <Annotations Target="WholefoodsService.Plants/createdBy">
+                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                        </Annotations>
+                                        <Annotations Target="WholefoodsService.Plants/modifiedAt">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                            </Annotations>
+                                            <Annotations Target="WholefoodsService.Plants/modifiedBy">
+                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="WholefoodsService.Plants/WERKS">
+                                                        <Annotation Term="Common.Label" String="{i18n>plantID}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="WholefoodsService.Plants/NAME1">
+                                                            <Annotation Term="Common.Label" String="{i18n>plantName}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="WholefoodsService.Plants/STRAS">
+                                                                <Annotation Term="Common.Label" String="{i18n>address}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="WholefoodsService.Plants/PSTLZ">
+                                                                    <Annotation Term="Common.Label" String="{i18n>postalCode}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="WholefoodsService.Plants/ORT01">
+                                                                        <Annotation Term="Common.Label" String="{i18n>city}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="WholefoodsService.Plants/LANDX">
+                                                                            <Annotation Term="Common.Label" String="{i18n>country}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="WholefoodsService.Plants/CNTACT">
+                                                                                <Annotation Term="Common.Label" String="{i18n>phoneNumber}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="WholefoodsService.Plants/IsActiveEntity">
+                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="WholefoodsService.Plants/HasActiveEntity">
+                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="WholefoodsService.Plants/HasDraftEntity">
+                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="WholefoodsService.Plants/DraftAdministrativeData">
+                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="WholefoodsService.Materials">
+                                                                                    <Annotation Term="UI.SelectionFields">
+                                                                                        <Collection>
+                                                                                            <PropertyPath>MATKL_MATKL</PropertyPath>
+                                                                                            <PropertyPath>MTART_MTART</PropertyPath>
+                                                                                        </Collection>
+                                                                                    </Annotation>
+                                                                                    <Annotation Term="UI.LineItem">
+                                                                                        <Collection>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="MATNR"/>
+                                                                                                <Annotation Term="HTML5.CssDefaults">
+                                                                                                    <Record Type="HTML5.CssDefaultsType">
+                                                                                                        <PropertyValue Property="width" String="20%"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Record>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="MTART_MTART"/>
+                                                                                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                                                                                <Annotation Term="HTML5.CssDefaults">
+                                                                                                    <Record Type="HTML5.CssDefaultsType">
+                                                                                                        <PropertyValue Property="width" String="20%"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Record>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="MATKL_MATKL"/>
+                                                                                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                                                                                <Annotation Term="HTML5.CssDefaults">
+                                                                                                    <Record Type="HTML5.CssDefaultsType">
+                                                                                                        <PropertyValue Property="width" String="20%"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Record>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="MAKTX"/>
+                                                                                                <Annotation Term="HTML5.CssDefaults">
+                                                                                                    <Record Type="HTML5.CssDefaultsType">
+                                                                                                        <PropertyValue Property="width" String="20%"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Record>
+                                                                                            <Record Type="UI.DataField">
+                                                                                                <PropertyValue Property="Value" Path="UOM"/>
+                                                                                                <Annotation Term="HTML5.CssDefaults">
+                                                                                                    <Record Type="HTML5.CssDefaultsType">
+                                                                                                        <PropertyValue Property="width" String="20%"/>
+                                                                                                    </Record>
+                                                                                                </Annotation>
+                                                                                            </Record>
+                                                                                        </Collection>
+                                                                                    </Annotation>
+                                                                                    <Annotation Term="UI.PresentationVariant">
+                                                                                        <Record Type="UI.PresentationVariantType">
+                                                                                            <PropertyValue Property="SortOrder">
+                                                                                                <Collection>
+                                                                                                    <Record Type="Common.SortOrderType">
+                                                                                                        <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                        <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                    </Record>
+                                                                                                </Collection>
+                                                                                            </PropertyValue>
+                                                                                            <PropertyValue Property="Visualizations">
+                                                                                                <Collection>
+                                                                                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                </Collection>
+                                                                                            </PropertyValue>
+                                                                                        </Record>
+                                                                                    </Annotation>
+                                                                                    <Annotation Term="UI.HeaderInfo">
+                                                                                        <Record Type="UI.HeaderInfoType">
+                                                                                            <PropertyValue Property="TypeName" String="{i18n>material}"/>
+                                                                                                <PropertyValue Property="TypeNamePlural" String="{i18n>materials}"/>
+                                                                                                    <PropertyValue Property="Title">
+                                                                                                        <Record Type="UI.DataField">
+                                                                                                            <PropertyValue Property="Value" Path="MATNR"/>
+                                                                                                        </Record>
+                                                                                                    </PropertyValue>
+                                                                                                    <PropertyValue Property="Description">
+                                                                                                        <Record Type="UI.DataField">
+                                                                                                            <PropertyValue Property="Value" Path="MTART_MTART"/>
+                                                                                                        </Record>
+                                                                                                    </PropertyValue>
+                                                                                                    <PropertyValue Property="TypeImageUrl" String="sap-icon://company-view"/>
+                                                                                                </Record>
+                                                                                            </Annotation>
+                                                                                            <Annotation Term="UI.Facets">
+                                                                                                <Collection>
+                                                                                                    <Record Type="UI.ReferenceFacet">
+                                                                                                        <PropertyValue Property="Label" String="{i18n>basicInfo}"/>
+                                                                                                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                                                                                        </Record>
+                                                                                                        <Record Type="UI.ReferenceFacet">
+                                                                                                            <PropertyValue Property="Label" String="{i18n>administrativeData}"/>
+                                                                                                                <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AdministrativeData"/>
+                                                                                                            </Record>
+                                                                                                        </Collection>
+                                                                                                    </Annotation>
+                                                                                                    <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                                                                                                        <Record Type="UI.FieldGroupType">
+                                                                                                            <PropertyValue Property="Data">
+                                                                                                                <Collection>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="MATNR"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="MTART_MTART"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="MATKL_MATKL"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="MAKTX"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="UOM"/>
+                                                                                                                    </Record>
+                                                                                                                </Collection>
+                                                                                                            </PropertyValue>
+                                                                                                        </Record>
+                                                                                                    </Annotation>
+                                                                                                    <Annotation Term="UI.FieldGroup" Qualifier="AdministrativeData">
+                                                                                                        <Record Type="UI.FieldGroupType">
+                                                                                                            <PropertyValue Property="Data">
+                                                                                                                <Collection>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="createdBy"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="createdAt"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="modifiedBy"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="UI.DataField">
+                                                                                                                        <PropertyValue Property="Value" Path="modifiedAt"/>
+                                                                                                                    </Record>
+                                                                                                                </Collection>
+                                                                                                            </PropertyValue>
+                                                                                                        </Record>
+                                                                                                    </Annotation>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="WholefoodsService.EntityContainer/Materials">
+                                                                                                    <Annotation Term="UI.PresentationVariant">
+                                                                                                        <Record Type="UI.PresentationVariantType">
+                                                                                                            <PropertyValue Property="SortOrder">
+                                                                                                                <Collection>
+                                                                                                                    <Record Type="Common.SortOrderType">
+                                                                                                                        <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                                        <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                                    </Record>
+                                                                                                                </Collection>
+                                                                                                            </PropertyValue>
+                                                                                                            <PropertyValue Property="Visualizations">
+                                                                                                                <Collection>
+                                                                                                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                                </Collection>
+                                                                                                            </PropertyValue>
+                                                                                                        </Record>
+                                                                                                    </Annotation>
+                                                                                                    <Annotation Term="Common.DraftRoot">
+                                                                                                        <Record Type="Common.DraftRootType">
+                                                                                                            <PropertyValue Property="ActivationAction" String="WholefoodsService.draftActivate"/>
+                                                                                                            <PropertyValue Property="EditAction" String="WholefoodsService.draftEdit"/>
+                                                                                                            <PropertyValue Property="PreparationAction" String="WholefoodsService.draftPrepare"/>
+                                                                                                        </Record>
+                                                                                                    </Annotation>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="WholefoodsService.Materials/createdAt">
+                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                    </Annotations>
+                                                                                                    <Annotations Target="WholefoodsService.Materials/createdBy">
+                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="WholefoodsService.Materials/modifiedAt">
+                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                </Annotations>
+                                                                                                                <Annotations Target="WholefoodsService.Materials/modifiedBy">
+                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="WholefoodsService.Materials/MATNR">
+                                                                                                                            <Annotation Term="Common.Label" String="{i18n>materialID}"/>
+                                                                                                                            </Annotations>
+                                                                                                                            <Annotations Target="WholefoodsService.Materials/MTART">
+                                                                                                                                <Annotation Term="Common.Label" String="{i18n>materialType}"/>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="WholefoodsService.Materials/MTART_MTART">
+                                                                                                                                    <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                                                                                                                                    <Annotation Term="Common.ValueList">
+                                                                                                                                        <Record Type="Common.ValueListType">
+                                                                                                                                            <PropertyValue Property="CollectionPath" String="MaterialTypes"/>
+                                                                                                                                            <PropertyValue Property="Parameters">
+                                                                                                                                                <Collection>
+                                                                                                                                                    <Record Type="Common.ValueListParameterInOut">
+                                                                                                                                                        <PropertyValue Property="LocalDataProperty" PropertyPath="MTART_MTART"/>
+                                                                                                                                                        <PropertyValue Property="ValueListProperty" String="MTART"/>
+                                                                                                                                                    </Record>
+                                                                                                                                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                                                                                                        <PropertyValue Property="ValueListProperty" String="MTARTTX"/>
+                                                                                                                                                    </Record>
+                                                                                                                                                </Collection>
+                                                                                                                                            </PropertyValue>
+                                                                                                                                        </Record>
+                                                                                                                                    </Annotation>
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>materialType}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="WholefoodsService.Materials/MATKL">
+                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>materialGroup}"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="WholefoodsService.Materials/MATKL_MATKL">
+                                                                                                                                            <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                                                                                                                                            <Annotation Term="Common.ValueList">
+                                                                                                                                                <Record Type="Common.ValueListType">
+                                                                                                                                                    <PropertyValue Property="CollectionPath" String="MaterialGroups"/>
+                                                                                                                                                    <PropertyValue Property="Parameters">
+                                                                                                                                                        <Collection>
+                                                                                                                                                            <Record Type="Common.ValueListParameterInOut">
+                                                                                                                                                                <PropertyValue Property="LocalDataProperty" PropertyPath="MATKL_MATKL"/>
+                                                                                                                                                                <PropertyValue Property="ValueListProperty" String="MATKL"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                                                                                                                <PropertyValue Property="ValueListProperty" String="MATKLTX"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                        </Collection>
+                                                                                                                                                    </PropertyValue>
+                                                                                                                                                </Record>
+                                                                                                                                            </Annotation>
+                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>materialGroup}"/>
+                                                                                                                                            </Annotations>
+                                                                                                                                            <Annotations Target="WholefoodsService.Materials/MAKTX">
+                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>materialDescription}"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="WholefoodsService.Materials/UOM">
+                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>unitOfMeasure}"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="WholefoodsService.Materials/IsActiveEntity">
+                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="WholefoodsService.Materials/HasActiveEntity">
+                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="WholefoodsService.Materials/HasDraftEntity">
+                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="WholefoodsService.Materials/DraftAdministrativeData">
+                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups">
+                                                                                                                                                        <Annotation Term="UI.SelectionFields">
+                                                                                                                                                            <Collection>
+                                                                                                                                                                <PropertyPath>MATKL</PropertyPath>
+                                                                                                                                                            </Collection>
+                                                                                                                                                        </Annotation>
+                                                                                                                                                        <Annotation Term="UI.LineItem">
+                                                                                                                                                            <Collection>
+                                                                                                                                                                <Record Type="UI.DataField">
+                                                                                                                                                                    <PropertyValue Property="Value" Path="MATKL"/>
+                                                                                                                                                                    <Annotation Term="HTML5.CssDefaults">
+                                                                                                                                                                        <Record Type="HTML5.CssDefaultsType">
+                                                                                                                                                                            <PropertyValue Property="width" String="40%"/>
+                                                                                                                                                                        </Record>
+                                                                                                                                                                    </Annotation>
+                                                                                                                                                                </Record>
+                                                                                                                                                                <Record Type="UI.DataField">
+                                                                                                                                                                    <PropertyValue Property="Value" Path="MATKLTX"/>
+                                                                                                                                                                    <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                                                                                                                                                    <Annotation Term="HTML5.CssDefaults">
+                                                                                                                                                                        <Record Type="HTML5.CssDefaultsType">
+                                                                                                                                                                            <PropertyValue Property="width" String="40%"/>
+                                                                                                                                                                        </Record>
+                                                                                                                                                                    </Annotation>
+                                                                                                                                                                </Record>
+                                                                                                                                                            </Collection>
+                                                                                                                                                        </Annotation>
+                                                                                                                                                        <Annotation Term="UI.PresentationVariant">
+                                                                                                                                                            <Record Type="UI.PresentationVariantType">
+                                                                                                                                                                <PropertyValue Property="SortOrder">
+                                                                                                                                                                    <Collection>
+                                                                                                                                                                        <Record Type="Common.SortOrderType">
+                                                                                                                                                                            <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                                                                                            <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                                                                                        </Record>
+                                                                                                                                                                    </Collection>
+                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                <PropertyValue Property="Visualizations">
+                                                                                                                                                                    <Collection>
+                                                                                                                                                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                                                                                    </Collection>
+                                                                                                                                                                </PropertyValue>
+                                                                                                                                                            </Record>
+                                                                                                                                                        </Annotation>
+                                                                                                                                                        <Annotation Term="UI.HeaderInfo">
+                                                                                                                                                            <Record Type="UI.HeaderInfoType">
+                                                                                                                                                                <PropertyValue Property="TypeName" String="{i18n>matGroup}"/>
+                                                                                                                                                                    <PropertyValue Property="TypeNamePlural" String="{i18n>matGroups}"/>
+                                                                                                                                                                        <PropertyValue Property="Title">
+                                                                                                                                                                            <Record Type="UI.DataField">
+                                                                                                                                                                                <PropertyValue Property="Value" Path="MATKL"/>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </PropertyValue>
+                                                                                                                                                                        <PropertyValue Property="Description">
+                                                                                                                                                                            <Record Type="UI.DataField">
+                                                                                                                                                                                <PropertyValue Property="Value" Path="MATKLTX"/>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </PropertyValue>
+                                                                                                                                                                        <PropertyValue Property="TypeImageUrl" String="sap-icon://company-view"/>
+                                                                                                                                                                    </Record>
+                                                                                                                                                                </Annotation>
+                                                                                                                                                                <Annotation Term="UI.Facets">
+                                                                                                                                                                    <Collection>
+                                                                                                                                                                        <Record Type="UI.ReferenceFacet">
+                                                                                                                                                                            <PropertyValue Property="Label" String="{i18n>basicInfo}"/>
+                                                                                                                                                                                <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                            <Record Type="UI.ReferenceFacet">
+                                                                                                                                                                                <PropertyValue Property="Label" String="{i18n>administrativeData}"/>
+                                                                                                                                                                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AdministrativeData"/>
+                                                                                                                                                                                </Record>
+                                                                                                                                                                            </Collection>
+                                                                                                                                                                        </Annotation>
+                                                                                                                                                                        <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                                                                                                                                                                            <Record Type="UI.FieldGroupType">
+                                                                                                                                                                                <PropertyValue Property="Data">
+                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="MATKL"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="MATKLTX"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </Annotation>
+                                                                                                                                                                        <Annotation Term="UI.FieldGroup" Qualifier="AdministrativeData">
+                                                                                                                                                                            <Record Type="UI.FieldGroupType">
+                                                                                                                                                                                <PropertyValue Property="Data">
+                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="createdBy"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="createdAt"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="modifiedBy"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                            <PropertyValue Property="Value" Path="modifiedAt"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </Annotation>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                    <Annotations Target="WholefoodsService.EntityContainer/MaterialGroups">
+                                                                                                                                                                        <Annotation Term="UI.PresentationVariant">
+                                                                                                                                                                            <Record Type="UI.PresentationVariantType">
+                                                                                                                                                                                <PropertyValue Property="SortOrder">
+                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                        <Record Type="Common.SortOrderType">
+                                                                                                                                                                                            <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                                                                                                            <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                                                                                                        </Record>
+                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                <PropertyValue Property="Visualizations">
+                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </Annotation>
+                                                                                                                                                                        <Annotation Term="Common.DraftRoot">
+                                                                                                                                                                            <Record Type="Common.DraftRootType">
+                                                                                                                                                                                <PropertyValue Property="ActivationAction" String="WholefoodsService.draftActivate"/>
+                                                                                                                                                                                <PropertyValue Property="EditAction" String="WholefoodsService.draftEdit"/>
+                                                                                                                                                                                <PropertyValue Property="PreparationAction" String="WholefoodsService.draftPrepare"/>
+                                                                                                                                                                            </Record>
+                                                                                                                                                                        </Annotation>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/createdAt">
+                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                        </Annotations>
+                                                                                                                                                                        <Annotations Target="WholefoodsService.MaterialGroups/createdBy">
+                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                <Annotations Target="WholefoodsService.MaterialGroups/modifiedAt">
+                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/modifiedBy">
+                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                            <Annotations Target="WholefoodsService.MaterialGroups/MATKL">
+                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>id}"/>
+                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                <Annotations Target="WholefoodsService.MaterialGroups/MATKLTX">
+                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>description}"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/IsActiveEntity">
+                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/HasActiveEntity">
+                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/HasDraftEntity">
+                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialGroups/DraftAdministrativeData">
+                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes">
+                                                                                                                                                                                                        <Annotation Term="UI.SelectionFields">
+                                                                                                                                                                                                            <Collection/>
+                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                        <Annotation Term="UI.LineItem">
+                                                                                                                                                                                                            <Collection>
+                                                                                                                                                                                                                <Record Type="UI.DataField">
+                                                                                                                                                                                                                    <PropertyValue Property="Value" Path="MTART"/>
+                                                                                                                                                                                                                    <Annotation Term="HTML5.CssDefaults">
+                                                                                                                                                                                                                        <Record Type="HTML5.CssDefaultsType">
+                                                                                                                                                                                                                            <PropertyValue Property="width" String="40%"/>
+                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                    </Annotation>
+                                                                                                                                                                                                                </Record>
+                                                                                                                                                                                                                <Record Type="UI.DataField">
+                                                                                                                                                                                                                    <PropertyValue Property="Value" Path="MTARTTX"/>
+                                                                                                                                                                                                                    <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                                                                                                                                                                                                                    <Annotation Term="HTML5.CssDefaults">
+                                                                                                                                                                                                                        <Record Type="HTML5.CssDefaultsType">
+                                                                                                                                                                                                                            <PropertyValue Property="width" String="40%"/>
+                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                    </Annotation>
+                                                                                                                                                                                                                </Record>
+                                                                                                                                                                                                            </Collection>
+                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                        <Annotation Term="UI.PresentationVariant">
+                                                                                                                                                                                                            <Record Type="UI.PresentationVariantType">
+                                                                                                                                                                                                                <PropertyValue Property="SortOrder">
+                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                        <Record Type="Common.SortOrderType">
+                                                                                                                                                                                                                            <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                                                                                                                                            <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                                <PropertyValue Property="Visualizations">
+                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                        <Annotation Term="UI.HeaderInfo">
+                                                                                                                                                                                                            <Record Type="UI.HeaderInfoType">
+                                                                                                                                                                                                                <PropertyValue Property="TypeName" String="{i18n>matType}"/>
+                                                                                                                                                                                                                    <PropertyValue Property="TypeNamePlural" String="{i18n>matTypes}"/>
+                                                                                                                                                                                                                        <PropertyValue Property="Title">
+                                                                                                                                                                                                                            <Record Type="UI.DataField">
+                                                                                                                                                                                                                                <PropertyValue Property="Value" Path="MTART"/>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </PropertyValue>
+                                                                                                                                                                                                                        <PropertyValue Property="Description">
+                                                                                                                                                                                                                            <Record Type="UI.DataField">
+                                                                                                                                                                                                                                <PropertyValue Property="Value" Path="MTARTTX"/>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </PropertyValue>
+                                                                                                                                                                                                                        <PropertyValue Property="TypeImageUrl" String="sap-icon://company-view"/>
+                                                                                                                                                                                                                    </Record>
+                                                                                                                                                                                                                </Annotation>
+                                                                                                                                                                                                                <Annotation Term="UI.Facets">
+                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                        <Record Type="UI.ReferenceFacet">
+                                                                                                                                                                                                                            <PropertyValue Property="Label" String="{i18n>basicInfo}"/>
+                                                                                                                                                                                                                                <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                            <Record Type="UI.ReferenceFacet">
+                                                                                                                                                                                                                                <PropertyValue Property="Label" String="{i18n>administrativeData}"/>
+                                                                                                                                                                                                                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AdministrativeData"/>
+                                                                                                                                                                                                                                </Record>
+                                                                                                                                                                                                                            </Collection>
+                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                        <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                                                                                                                                                                                                                            <Record Type="UI.FieldGroupType">
+                                                                                                                                                                                                                                <PropertyValue Property="Data">
+                                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="MTART"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="MTARTTX"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                        <Annotation Term="UI.FieldGroup" Qualifier="AdministrativeData">
+                                                                                                                                                                                                                            <Record Type="UI.FieldGroupType">
+                                                                                                                                                                                                                                <PropertyValue Property="Data">
+                                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="createdBy"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="createdAt"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="modifiedBy"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                        <Record Type="UI.DataField">
+                                                                                                                                                                                                                                            <PropertyValue Property="Value" Path="modifiedAt"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.EntityContainer/MaterialTypes">
+                                                                                                                                                                                                                        <Annotation Term="UI.PresentationVariant">
+                                                                                                                                                                                                                            <Record Type="UI.PresentationVariantType">
+                                                                                                                                                                                                                                <PropertyValue Property="SortOrder">
+                                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                                        <Record Type="Common.SortOrderType">
+                                                                                                                                                                                                                                            <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                                                                                                                                                                                                                                            <PropertyValue Property="Descending" Bool="false"/>
+                                                                                                                                                                                                                                        </Record>
+                                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                                                <PropertyValue Property="Visualizations">
+                                                                                                                                                                                                                                    <Collection>
+                                                                                                                                                                                                                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                                                                                                                                                                                                                    </Collection>
+                                                                                                                                                                                                                                </PropertyValue>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                        <Annotation Term="Common.DraftRoot">
+                                                                                                                                                                                                                            <Record Type="Common.DraftRootType">
+                                                                                                                                                                                                                                <PropertyValue Property="ActivationAction" String="WholefoodsService.draftActivate"/>
+                                                                                                                                                                                                                                <PropertyValue Property="EditAction" String="WholefoodsService.draftEdit"/>
+                                                                                                                                                                                                                                <PropertyValue Property="PreparationAction" String="WholefoodsService.draftPrepare"/>
+                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/createdAt">
+                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                        <Annotations Target="WholefoodsService.MaterialTypes/createdBy">
+                                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                <Annotations Target="WholefoodsService.MaterialTypes/modifiedAt">
+                                                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/modifiedBy">
+                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.MaterialTypes/MTART">
+                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>id}"/>
+                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                <Annotations Target="WholefoodsService.MaterialTypes/MTARTTX">
+                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>description}"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/IsActiveEntity">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/HasActiveEntity">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/HasDraftEntity">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.MaterialTypes/DraftAdministrativeData">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.EntityContainer/BPGeneral">
+                                                                                                                                                                                                                                                        <Annotation Term="Common.DraftRoot">
+                                                                                                                                                                                                                                                            <Record Type="Common.DraftRootType">
+                                                                                                                                                                                                                                                                <PropertyValue Property="ActivationAction" String="WholefoodsService.draftActivate"/>
+                                                                                                                                                                                                                                                                <PropertyValue Property="EditAction" String="WholefoodsService.draftEdit"/>
+                                                                                                                                                                                                                                                                <PropertyValue Property="PreparationAction" String="WholefoodsService.draftPrepare"/>
+                                                                                                                                                                                                                                                            </Record>
+                                                                                                                                                                                                                                                        </Annotation>
+                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.BPGeneral/createdAt">
+                                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                        <Annotations Target="WholefoodsService.BPGeneral/createdBy">
+                                                                                                                                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                <Annotations Target="WholefoodsService.BPGeneral/modifiedAt">
+                                                                                                                                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.BPGeneral/modifiedBy">
+                                                                                                                                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.BPGeneral/IsActiveEntity">
+                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.BPGeneral/HasActiveEntity">
+                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.BPGeneral/HasDraftEntity">
+                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.BPGeneral/DraftAdministrativeData">
+                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.DraftAdministrativeData">
+                                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                                <Annotations Target="WholefoodsService.DraftAdministrativeData/DraftUUID">
+                                                                                                                                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                                                                                                                                                                                                                                                                                        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+                                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.DraftAdministrativeData/CreationDateTime">
+                                                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                                                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                                                        <Annotations Target="WholefoodsService.DraftAdministrativeData/CreatedByUser">
+                                                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                                                <Annotations Target="WholefoodsService.DraftAdministrativeData/LastChangeDateTime">
+                                                                                                                                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                                                                                                                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                                                                                                                                    <Annotations Target="WholefoodsService.DraftAdministrativeData/LastChangedByUser">
+                                                                                                                                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                                                                                                                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                                                                                                                                        <Annotations Target="WholefoodsService.DraftAdministrativeData/InProcessByUser">
+                                                                                                                                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                                                                                                                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                                                                                                                                            <Annotations Target="WholefoodsService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                                                                                                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                                                                                                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                                                                                                                                            </Schema>
+                                                                                                                                                                                                                                                                                                        </edmx:DataServices>
+                                                                                                                                                                                                                                                                                                    </edmx:Edmx>

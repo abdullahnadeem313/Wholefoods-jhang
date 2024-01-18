@@ -1,0 +1,55 @@
+{
+    "name": "wholefoods",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "@sap/xsenv": "^4.2.0",
+        "@sap/xssec": "^3",
+        "express": "^4",
+        "passport": "^0.7.0"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.1",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "hana": "cds deploy --to hana:wholefoods-db --auto-undeploy",
+        "hdeploy": "cf deploy mta_archives/wholefoods_1.0.0.mtar",
+        "watch-plants": "cds watch --open plants/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy wholefoods --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "watch-material_types": "cds watch --open material_types/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-material_groups": "cds watch --open material_groups/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-materials": "cds watch --open materials/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-bp_general": "cds watch --open bp_general/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-roles": "cds watch --open roles/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-bprofiles": "cds watch --open bprofiles/webapp/index.html?sap-ui-xx-viewCache=false"
+    },
+    "cds": {
+        "requires": {
+            "db": "hana"
+        }
+    },
+    "engines": {
+        "node": ">=20.5.0",
+        "npm": ">=10.3.0"
+    },
+    "sapux": [
+        "app/plants",
+        "app/material_types",
+        "app/material_groups",
+        "app/materials",
+        "app/bp_general",
+        "app/roles",
+        "app/bprofiles"
+    ]
+}
