@@ -1,3 +1,4 @@
+
 using {managed} from '@sap/cds/common';
 
 namespace wholefoods;
@@ -38,7 +39,7 @@ context Wholefoods {
     // @cds.odata.valuelist
     entity BPGeneral : managed {
         key PARTNER : String(10); //Business Partner ID
-        BPTYPE  : String(1);  //BP Category
+        BPTYPE  : Association to one BPTpyes;  //BP Category
         NAME    : String(50); //BP Name
         STRAS   : String(30); //House No. & Street
         PSTLZ   : String(10); //Postal/zip code
@@ -57,6 +58,11 @@ context Wholefoods {
     entity Bprofiles : managed {
         key PARTNER : Association to one BPGeneral; //BP ID
         key ROLE :Association to one Roles; //BP Role ID
+    }
+
+    entity BPTpyes {
+        Key BPTYPE : String(1);
+        BPTYPEDESC : String(12);
     }
 
 }

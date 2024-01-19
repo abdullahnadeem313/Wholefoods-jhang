@@ -3,7 +3,28 @@ using WholefoodsService as service from '../../wholefoods-service';
 
 annotate service.BPGeneral with {
     PARTNER @(title: '{i18n>businessPartnerID}');
-    BPTYPE  @(title: '{i18n>bpCategory}');
+    BPTYPE   @(title: '{i18n>bpCategory}', 
+    Common:{
+        ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'BPTpyes',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterOut',
+                    LocalDataProperty : BPTYPE_BPTYPE,
+                    ValueListProperty : 'BPTYPE',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'BPTYPEDESC',
+                },
+            ],
+        },
+        Text : {
+            $value: BPTYPE.BPTYPEDESC,
+            ![@UI.TextArrangement] : #TextFirst,
+        },
+    });
     NAME    @(title: '{i18n>bpName}');
     STRAS   @(title: '{i18n>address}');
     PSTLZ   @(title: '{i18n>postalCode}');
@@ -34,7 +55,7 @@ annotate service.BPGeneral with @(UI: {
         },
         {
             $Type: 'UI.DataField',
-            Value: BPTYPE,
+            Value: BPTYPE_BPTYPE,
             ![@HTML5.CssDefaults] : {width:'20%'}
         },
         {
@@ -104,7 +125,7 @@ annotate service.BPGeneral with @(UI: {
     ],
     FieldGroup #BasicInfo         : {Data: [
         {Value: PARTNER},
-        {Value: BPTYPE},
+        {Value: BPTYPE_BPTYPE},
         {Value: NAME},
         {Value: STRAS},
         {Value: PSTLZ},
