@@ -92,6 +92,14 @@ modules:
       - nsbprofiles.zip
       name: nsbprofiles
       target-path: resources/
+    - artifacts:
+      - nsbptypes.zip
+      name: nsbptypes
+      target-path: resources/
+    - artifacts:
+      - nsmard.zip
+      name: nsmard
+      target-path: resources/
 - name: nsplants
   type: html5
   path: app/plants
@@ -155,6 +163,26 @@ modules:
 - name: nsbprofiles
   type: html5
   path: app/bprofiles
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsbptypes
+  type: html5
+  path: app/bp_types
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsmard
+  type: html5
+  path: app/mard
   build-parameters:
     build-result: dist
     builder: custom

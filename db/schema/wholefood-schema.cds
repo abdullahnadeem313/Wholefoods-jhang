@@ -60,9 +60,16 @@ context Wholefoods {
         key ROLE :Association to one Roles; //BP Role ID
     }
 
-    entity BPTpyes {
+    entity BPTpyes : managed {
         Key BPTYPE : String(1);
         BPTYPEDESC : String(12);
+    }
+
+    entity Mard : managed {
+        Key MATNR : Association to one Materials; //Material ID
+        WERKS : Association to one Plants; //Plant ID
+        LABST : Integer; //Unrestricted Stock
+        UOM : String(2); //Unit of Measure
     }
 
 }

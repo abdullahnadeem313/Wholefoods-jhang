@@ -25,7 +25,21 @@ annotate service.BPGeneral with {
             ![@UI.TextArrangement] : #TextFirst,
         },
     });
-    NAME    @(title: '{i18n>bpName}');
+    NAME    @(title: '{i18n>bpName}',
+    Common: {
+        ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'BPGeneral',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterOut',
+                    LocalDataProperty : NAME,
+                    ValueListProperty : 'NAME',
+                },
+            ],
+        },
+    }
+    );
     STRAS   @(title: '{i18n>address}');
     PSTLZ   @(title: '{i18n>postalCode}');
     ORT01   @(title: '{i18n>city}');
@@ -44,8 +58,8 @@ annotate service.BPGeneral with {
 
 annotate service.BPGeneral with @(UI: {
     SelectionFields    : [
-        // BPTYPE,
-        // NAME
+        BPTYPE_BPTYPE,
+        NAME
     ],
     LineItem           : {$value: [
         {

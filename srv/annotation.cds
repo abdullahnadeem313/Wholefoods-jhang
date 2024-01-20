@@ -11,3 +11,7 @@ using from './annotations/BPGeneral/BPGeneral-fiori';
 using from './annotations/Roles/roles-fiori';
 
 using from './annotations/Bprofiles/bprofiles-fiori';
+
+using from './annotations/BPTpyes/bptypes-fiori';
+
+using from './annotations/Mard/mard-fiori';

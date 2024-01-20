@@ -60,8 +60,8 @@ annotate service.Roles with @(UI: {
     HeaderInfo                    : {
         TypeName      : '{i18n>role}',
         TypeNamePlural: '{i18n>roles}',
-        Title         : {Value: ROLE},
-        Description   : {Value: DESC},
+        Title         : {Value: DESC},
+        Description   : {Value: ROLE},
         TypeImageUrl  : 'sap-icon://company-view',
     },
     /**
