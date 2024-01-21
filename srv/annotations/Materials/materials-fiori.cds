@@ -4,7 +4,28 @@ using from '@sap/cds/common';
 
 
 annotate service.Materials with{
-    MATNR @(title: '{i18n>materialID}');
+    MATNR @(title: '{i18n>materialID}',
+    Common:{
+        ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Materials',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterOut',
+                    LocalDataProperty : MATNR,
+                    ValueListProperty : 'MATNR',
+                },{
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'MAKTX',
+                },
+            ],
+        },
+        Text : {
+            $value: MAKTX,
+            ![@UI.TextArrangement] : #TextFirst,
+        },
+    }
+    );
     MTART @(title: '{i18n>materialType}');// , Common.ValueListWithFixedValues); this method also workable by annotating entities
     MATKL @(title: '{i18n>materialGroup}');//, Common.ValueListWithFixedValues);
     MAKTX @(title: '{i18n>materialDescription}');
@@ -23,7 +44,8 @@ annotate service.Materials with{
 annotate service.Materials with @(UI: {
     SelectionFields    : [
         MATKL_MATKL,
-        MTART_MTART
+        MTART_MTART,
+        MATNR
     ],
     LineItem           : {$value: [
         {

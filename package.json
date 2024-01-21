@@ -34,7 +34,8 @@
         "watch-roles": "cds watch --open roles/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-bprofiles": "cds watch --open bprofiles/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-bp_types": "cds watch --open bp_types/webapp/index.html?sap-ui-xx-viewCache=false",
-        "watch-mard": "cds watch --open mard/webapp/index.html?sap-ui-xx-viewCache=false"
+        "watch-mard": "cds watch --open mard/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-po_head": "cds watch --open po_head/webapp/index.html?sap-ui-xx-viewCache=false"
     },
     "cds": {
         "requires": {
@@ -54,6 +55,7 @@
         "app/roles",
         "app/bprofiles",
         "app/bp_types",
-        "app/mard"
+        "app/mard",
+        "app/po_head"
     ]
 }

@@ -1,4 +1,3 @@
-
 using {managed} from '@sap/cds/common';
 
 namespace wholefoods;
@@ -71,5 +70,23 @@ context Wholefoods {
         LABST : Integer; //Unrestricted Stock
         UOM : String(2); //Unit of Measure
     }
+
+    entity PO_Head : managed {
+        // Key ID : UUID @Core.Computed:true; 
+       key EBELN : String(10); //Purchasing Document Number
+        PARTNER : Association to one BPGeneral; //Business Partner ID
+        items : Composition of many PO_Item on items.EBELN = $self;
+    }
+
+    entity PO_Item : managed {
+        key ID: UUID @Core.Computed:true;
+        EBELN : Association to one PO_Head; //Purchasing Document Number
+        EBELP : String(10); //Item Number
+        WERKS : Association to one Plants; //Plant
+        MATNR : Association to one Materials; //Material ID
+        MENGE : Integer; // PO Quantity
+        UOM : String(2) // Unit of Measure
+    }
+
 
 }

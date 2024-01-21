@@ -15,3 +15,5 @@ using from './annotations/Bprofiles/bprofiles-fiori';
 using from './annotations/BPTpyes/bptypes-fiori';
 
 using from './annotations/Mard/mard-fiori';
+
+using from './annotations/PO_Head/po_head-fiori';
