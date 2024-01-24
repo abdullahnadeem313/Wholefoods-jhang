@@ -96,7 +96,6 @@
       "css": []
     },
     "routing": {
-      "config": {},
       "routes": [
         {
           "pattern": ":?query:",
@@ -129,7 +128,8 @@
                     "route": "PO_HeadObjectPage"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
@@ -145,6 +145,17 @@
                 "items": {
                   "detail": {
                     "route": "PO_ItemObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "items/@com.sap.vocabularies.UI.v1.LineItem#POItemstable": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    },
+                    "selectAll": true,
+                    "type": "ResponsiveTable"
                   }
                 }
               }
