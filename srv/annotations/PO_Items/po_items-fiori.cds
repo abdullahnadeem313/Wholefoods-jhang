@@ -1,4 +1,13 @@
 using WholefoodsService as service from '../../wholefoods-service';
+annotate service.PO_Item {
+    ID  @(title: '{i18n>poItemsID}');
+    EBELN @(title: '{i18n>purchaseOrderNumber}');
+    EBELP @(title: '{i18n>itemNumber}');
+    WERKS @(title: '{i18n>plantID}');
+    MATNR @(title: '{i18n>materialID}');
+    MENGE @(title: '{i18n>poQuantity}');
+    UOM @(title: '{i18n>unitOfMeasure}');
+}
 
 annotate service.PO_Item with @(
     UI.LineItem #POItemstable : [
@@ -82,24 +91,31 @@ annotate service.PO_Item with @(
         {
             $Type : 'UI.DataField',
             Value : EBELN.EBELN,
+            ![@HTML5.CssDefaults] : {width:'16%'},
         },{
             $Type : 'UI.DataField',
             Value : EBELP,
+            ![@HTML5.CssDefaults] : {width:'16%'},
         },{
             $Type : 'UI.DataField',
             Value : WERKS_WERKS,
+            ![@HTML5.CssDefaults] : {width:'16%'},
         },{
             $Type : 'UI.DataField',
             Value : UOM,
+            ![@HTML5.CssDefaults] : {width:'16%'},
         },{
             $Type : 'UI.DataField',
             Value : MENGE,
+            ![@HTML5.CssDefaults] : {width:'16%'},
         },{
             $Type : 'UI.DataField',
             Value : MATNR_MATNR,
+            ![@HTML5.CssDefaults] : {width:'17%'},
         },{
             $Type : 'UI.DataField',
             Value : EBELN.EBELN,
+
         },{
             $Type : 'UI.DataField',
             Value : EBELN.PARTNER_PARTNER,

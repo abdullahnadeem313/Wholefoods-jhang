@@ -81,10 +81,10 @@ context Wholefoods {
     entity PO_Item : managed {
         key ID: UUID @Core.Computed:true;
         EBELN : Association to PO_Head; //Purchasing Document Number
-        EBELP : String(10); //Item Number
+        EBELP : String(10); // @assert.range:['0010','0100']; //Item Number
         WERKS : Association to one Plants; //Plant ID
         MATNR : Association to one Materials; //Material ID
-        MENGE : Integer; // PO Quantity
+        MENGE : Integer; // @assert.range:[1,1000];  // PO Quantity
         UOM : String(2) // Unit of Measure
     }
 

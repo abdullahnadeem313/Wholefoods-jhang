@@ -31,17 +31,9 @@ annotate service.PO_Head {
 }
 
 
-annotate service.PO_Item {
-    ID  @(title: '{i18n>poItemsID}');
-    EBELN @(title: '{i18n>purchaseOrderNumber}');
-    EBELP @(title: '{i18n>itemNumber}');
-    WERKS @(title: '{i18n>plantID}');
-    MATNR @(title: '{i18n>materialID}');
-    MENGE @(title: '{i18n>poQuantity}');
-    UOM @(title: '{i18n>unitOfMeasure}');
-}
 
 annotate service.PO_Head with @(
+    // UI.SelectionFields: [EBELN],
     UI.LineItem: [
     {
         $Type                : 'UI.DataField',
