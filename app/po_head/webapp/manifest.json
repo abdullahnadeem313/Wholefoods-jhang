@@ -152,7 +152,8 @@
                 "items/@com.sap.vocabularies.UI.v1.LineItem#POItemstable": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "Inline"
+                      "name": "Inline",
+                      "createAtEnd": true
                     },
                     "selectAll": true,
                     "type": "ResponsiveTable"
