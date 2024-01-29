@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.12.2",
-      "toolsId": "0ca12b97-5d63-4bdf-9486-293c64cb7887"
+      "toolsId": "d187fe19-abc9-415b-9455-6e13660d3414"
     },
     "dataSources": {
       "mainService": {
@@ -128,8 +128,7 @@
                     "route": "PO_HeadObjectPage"
                   }
                 }
-              },
-              "initialLoad": "Enabled"
+              }
             }
           }
         },
@@ -152,11 +151,8 @@
                 "items/@com.sap.vocabularies.UI.v1.LineItem#POItemstable": {
                   "tableSettings": {
                     "creationMode": {
-                      "name": "Inline",
-                      "createAtEnd": true
-                    },
-                    "selectAll": true,
-                    "type": "ResponsiveTable"
+                      "name": "Inline"
+                    }
                   }
                 }
               }
@@ -180,5 +176,9 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "wholefoods"
   }
 }

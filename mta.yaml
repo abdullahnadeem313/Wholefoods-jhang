@@ -3,217 +3,217 @@ ID: wholefoods
 description: A simple CAP project.
 version: 1.0.0
 modules:
-  - name: wholefoods-srv
-    type: nodejs
-    path: gen/srv
-    requires:
-      - name: wholefoods-db
-      - name: uaa_wholefoods
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
+- name: wholefoods-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: wholefoods-db
+  - name: uaa_wholefoods
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: wholefoods-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: wholefoods-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: wholefoods-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: wholefoods-destination-service
     parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: npm
-  - name: wholefoods-db-deployer
-    type: hdb
-    path: gen/db
-    requires:
-      - name: wholefoods-db
+      content-target: true
+  - name: wholefoods_html_repo_host
     parameters:
-      buildpack: nodejs_buildpack
-  - name: wholefoods-destination-content
-    type: com.sap.application.content
-    requires:
-      - name: wholefoods-destination-service
-        parameters:
-          content-target: true
-      - name: wholefoods_html_repo_host
-        parameters:
-          service-key:
-            name: wholefoods_html_repo_host-key
-      - name: uaa_wholefoods
-        parameters:
-          service-key:
-            name: uaa_wholefoods-key
+      service-key:
+        name: wholefoods_html_repo_host-key
+  - name: uaa_wholefoods
     parameters:
-      content:
+      service-key:
+        name: uaa_wholefoods-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: wholefoods_wholefoods_html_repo_host
+          ServiceInstanceName: wholefoods-html5-app-host-service
+          ServiceKeyName: wholefoods_html_repo_host-key
+          sap.cloud.service: wholefoods
+        - Authentication: OAuth2UserTokenExchange
+          Name: wholefoods_uaa_wholefoods
+          ServiceInstanceName: wholefoods-xsuaa-service
+          ServiceKeyName: uaa_wholefoods-key
+          sap.cloud.service: wholefoods
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: wholefoods-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: wholefoods-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - nspohead.zip
+      name: nspohead
+      target-path: resources/
+- name: nsplants
+  type: html5
+  path: app/plants
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsmaterialtypes
+  type: html5
+  path: app/material_types
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsmaterialgroups
+  type: html5
+  path: app/material_groups
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsmaterials
+  type: html5
+  path: app/materials
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsbpgeneral
+  type: html5
+  path: app/bp_general
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsroles
+  type: html5
+  path: app/roles
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsbprofiles
+  type: html5
+  path: app/bprofiles
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsbptypes
+  type: html5
+  path: app/bp_types
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsmard
+  type: html5
+  path: app/mard
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nspohead
+  type: html5
+  path: app/po_head
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: wholefoods-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: wholefoods-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
         instance:
           destinations:
-            - Name: wholefoods_wholefoods_html_repo_host
-              ServiceInstanceName: wholefoods-html5-app-host-service
-              ServiceKeyName: wholefoods_html_repo_host-key
-              sap.cloud.service: wholefoods
-            - Authentication: OAuth2UserTokenExchange
-              Name: wholefoods_uaa_wholefoods
-              ServiceInstanceName: wholefoods-xsuaa-service
-              ServiceKeyName: uaa_wholefoods-key
-              sap.cloud.service: wholefoods
-          existing_destinations_policy: ignore
-    build-parameters:
-      no-source: true
-  - name: wholefoods-app-content
-    type: com.sap.application.content
-    path: .
-    requires:
-      - name: wholefoods-repo-host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - nspohead.zip
-          name: nspohead
-          target-path: resources/
-  - name: nsplants
-    type: html5
-    path: app/plants
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsmaterialtypes
-    type: html5
-    path: app/material_types
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsmaterialgroups
-    type: html5
-    path: app/material_groups
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsmaterials
-    type: html5
-    path: app/materials
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsbpgeneral
-    type: html5
-    path: app/bp_general
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsroles
-    type: html5
-    path: app/roles
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsbprofiles
-    type: html5
-    path: app/bprofiles
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsbptypes
-    type: html5
-    path: app/bp_types
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nsmard
-    type: html5
-    path: app/mard
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: nspohead
-    type: html5
-    path: app/po_head
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-resources:
-  - name: wholefoods-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: wholefoods-destination-service
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        HTML5Runtime_enabled: true
-        init_data:
-          instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
-            existing_destinations_policy: update
-        version: 1.0.0
-      service: destination
-      service-name: wholefoods-destination-service
-      service-plan: lite
-  - name: wholefoods_html_repo_host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: wholefoods-html5-app-host-service
-      service-plan: app-host
-  - name: uaa_wholefoods
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        tenant-mode: dedicated
-        xsappname: wholefoods-${org}-${space}
-      path: ./xs-security.json
-      service: xsuaa
-      service-name: wholefoods-xsuaa-service
-      service-plan: application
-  - name: wholefoods-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: wholefoods-html5-srv
-      service-plan: app-host
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: wholefoods-destination-service
+    service-plan: lite
+- name: wholefoods_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: wholefoods-html5-app-host-service
+    service-plan: app-host
+- name: uaa_wholefoods
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: wholefoods-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: wholefoods-xsuaa-service
+    service-plan: application
+- name: wholefoods-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: wholefoods-html5-srv
+    service-plan: app-host
 parameters:
   deploy_mode: html5-repo
   disk_quota: 1024MB
@@ -221,6 +221,6 @@ parameters:
   memory: 1024MB
 build-parameters:
   before-all:
-    - builder: custom
-      commands:
-        - npx cds build --production
+  - builder: custom
+    commands:
+    - npx cds build --production

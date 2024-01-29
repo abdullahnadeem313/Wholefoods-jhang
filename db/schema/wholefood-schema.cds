@@ -57,6 +57,7 @@ context Wholefoods {
     entity Bprofiles : managed {
         key PARTNER : Association to one BPGeneral; //BP ID
         key ROLE :Association to one Roles; //BP Role ID
+        // partnerNAME    : String(50);//BP name
     }
 
     entity BPTpyes : managed {
@@ -73,7 +74,7 @@ context Wholefoods {
 
     entity PO_Head : managed {
         Key ID : UUID @Core.Computed:true; 
-        EBELN : String(10); //Purchasing Document Number
+        EBELN : String(10) @assert.notNull; //Purchasing Document Number
         PARTNER : Association to one BPGeneral; //Business Partner ID
         items : Composition of many wholefoods.Wholefoods.PO_Item on items.EBELN = $self;
     }
@@ -82,10 +83,25 @@ context Wholefoods {
         key ID: UUID @Core.Computed:true;
         EBELN : Association to PO_Head; //Purchasing Document Number
         EBELP : String(10) @assert.range:['0010','0100']; //Item Number
-        WERKS : Association to one Plants; //Plant ID
-        MATNR : Association to one Materials; //Material ID
-        MENGE : Integer;// @assert.range:[1,1000];  // PO Quantity
+        WERKS : Association to one Plants not null; //Plant ID
+        MATNR : Association to one Materials not null; //raw Material ID
+        MENGE : Integer not null;// @assert.range:[1,1000];  // PO Quantity
         UOM : String(2) // Unit of Measure
+    }
+
+    entity POVendor : managed {
+        key PARTNER : Association to one BPGeneral; //BP ID
+        key ROLE : Association to one Roles; //BP Role ID
+        vendorName : String(50); //BP Name
+
+        }
+
+    entity rawMaterials : managed {
+        key MATNR : String(18); //Material ID => MATNR
+            MTART : Association to one MaterialTypes; //Material Type => MTART
+            MATKL : Association to one MaterialGroups; //Material Group => MATKL
+            MAKTX : String(40); //Material Description => MAKTX
+            UOM   : String(2); //Unit of Measure => UOM
     }
 
 

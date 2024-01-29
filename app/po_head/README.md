@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Sun Jan 21 2024 20:31:27 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Jan 28 2024 14:56:45 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
 |**App Generator Version**<br>1.12.2|
 |**Generation Platform**<br>SAP Business Application Studio|
@@ -9,7 +9,7 @@
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/wholefoods/
 |**Module Name**<br>po_head|
-|**Application Title**<br>Manage Purchase orders|
+|**Application Title**<br>Manage Purchase Order|
 |**Namespace**<br>ns|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.120.4|
@@ -21,7 +21,7 @@
 
 ## po_head
 
-Manage Purchase orders
+Manage Purchase Order
 
 ### Starting the generated app
 

@@ -14,36 +14,57 @@ annotate service.PO_Item with @(
         {
             $Type : 'UI.DataField',
             Value : EBELP,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },{
             $Type : 'UI.DataField',
             Value : MATNR_MATNR,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },
         {
             $Type : 'UI.DataField',
-            Value : MATNR.MAKTX,
+            Value : MATNR.MAKTX ,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },{
             $Type : 'UI.DataField',
             Value : MENGE,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },{
             $Type : 'UI.DataField',
             Value : UOM,
-            ![@UI.Importance] : #High,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },{
             $Type : 'UI.DataField',
             Value : WERKS_WERKS,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },
         {
             $Type : 'UI.DataField',
             Value : WERKS.NAME1,
+            ![@HTML5.CssDefaults] : {width:'auto'},
+
         },]
 );
 annotate service.PO_Item with {
     EBELP @Common.FieldControl : #ReadOnly
 };
+// SideEffects
+// annotate service.PO_Item @(Common : {
+//     SideEffects  : {
+//         SourceProperties : ['MATNR_MATNR','WERKS_WERKS'],  //feilds on the basis of which we want to get value
+        
+//         TargetEntities   : [''] //feilds on which we want to get value
+//     }
+// });
 annotate service.PO_Item with {
     MATNR @(Common.ValueList : {
             $Type : 'Common.ValueListType',
-            CollectionPath : 'Materials',
+            CollectionPath : 'rawMaterials',
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',
@@ -91,27 +112,27 @@ annotate service.PO_Item with @(
         {
             $Type : 'UI.DataField',
             Value : EBELN.EBELN,
-            ![@HTML5.CssDefaults] : {width:'16%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : EBELP,
-            ![@HTML5.CssDefaults] : {width:'16%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : WERKS_WERKS,
-            ![@HTML5.CssDefaults] : {width:'16%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : UOM,
-            ![@HTML5.CssDefaults] : {width:'16%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : MENGE,
-            ![@HTML5.CssDefaults] : {width:'16%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : MATNR_MATNR,
-            ![@HTML5.CssDefaults] : {width:'17%'},
+            ![@HTML5.CssDefaults] : {width:'auto'},
         },{
             $Type : 'UI.DataField',
             Value : EBELN.EBELN,
@@ -122,6 +143,10 @@ annotate service.PO_Item with @(
         },]
 );
 
+// annotate service.rawMaterials with {
+//     MAKTX @Common.FieldControl : #ReadOnly
+// };
+
 annotate service.Materials with {
     MAKTX @Common.FieldControl : #ReadOnly
 };
@@ -131,13 +156,13 @@ annotate service.PO_Item with {
             ![@UI.TextArrangement] : #TextLast,
         }
 };
-annotate service.PO_Item with {
-    UOM @UI.MultiLineText : false
-};
+// annotate service.PO_Item with {
+//     UOM @UI.MultiLineText : false
+// };
 annotate service.PO_Item with {
     UOM @(Common.ValueList : {
             $Type : 'Common.ValueListType',
-            CollectionPath : 'Materials',
+            CollectionPath : 'rawMaterials',
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',

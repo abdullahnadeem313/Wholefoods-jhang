@@ -9,12 +9,12 @@ annotate service.PO_Head {
             ValueListWithFixedValues,
             ValueList: {
                 $Type         : 'Common.ValueListType',
-                CollectionPath: 'BPGeneral',
+                CollectionPath: 'POVendor',
                 Parameters    : [
                     {
                         $Type            : 'Common.ValueListParameterOut',
                         LocalDataProperty: PARTNER_PARTNER,
-                        ValueListProperty: 'PARTNER',
+                        ValueListProperty: 'PARTNER_PARTNER',
                     },
                     {
                         $Type            : 'Common.ValueListParameterDisplayOnly',

@@ -11,8 +11,10 @@ module.exports = async function (srv) {
   let ITEMID = "0";
   let PO_ITEM_EBELP = "0";
 
-  this.before('*',async req=>{
-    if (req.target){
+
+  // checking the details of request
+  this.before("*", async (req) => {
+    if (req.target) {
       let entityName = req.target.name;
       console.log("calling entity name:  " + entityName);
     }
@@ -20,88 +22,110 @@ module.exports = async function (srv) {
       let methodName = req.event;
       console.log("calling method name: " + methodName);
     }
-  })
+  });
 
   
   this.before("CREATE", "PO_Head", async (req) => {
+    
     PO_HEADER_EBELN = parseInt(PO_HEADER_EBELN);
     
     PO_HEADER_EBELN += 1;
     
     req.data.EBELN = zeroPad(PO_HEADER_EBELN, 10);
-    
+    ITEMID = '0';
     // console.log("EBELN ###"+ req.data.EBELN);
   });
-  
+
   this.before("CREATE", "PO_Item.drafts", (req) => {
-      
-      console.log("adding materials @@@ ");
-      ITEMID = parseInt(ITEMID);
-      ITEMID = ITEMID + 10;
-      PO_ITEM_EBELP = String(ITEMID).padStart(4, "0");
-  
-      req.data.EBELP = PO_ITEM_EBELP;
+    console.log("adding materials @@@ ");
+    ITEMID = parseInt(ITEMID);
+    ITEMID = ITEMID + 10;
+    PO_ITEM_EBELP = String(ITEMID).padStart(4, "0");
 
-
-    
+    req.data.EBELP = PO_ITEM_EBELP;
   });
 
+  //validating PO quantity feild
 
   this.before("UPDATE", "PO_Item.drafts", (req) => {
     const { data } = req;
 
-  // Check MENGE is present in the request data
-  if (data.MENGE !== undefined) {
-    const MENGEValue = data.MENGE;
-
-
-    if (MENGEValue == 0) {
-      req.error({
-        message: "Quantity value should be greater than zero.",
-        target: "MENGE"
-      });
-    }
-    else if (MENGEValue < 0) {
-      req.error({
-        message: "Negative numbers are not allowed.",
-        target: "MENGE"
-      });
-    }
-    else if (MENGEValue > 1000) {
-      req.error({
-        message: "Quantity value should not exceed 1000.",
-        target: "MENGE"
-      });
-    }
-  }
-  });
-
-
-  this.on('error',async (err) =>{
-        console.log("err ***",err);
-    if (err.element === 'EBELP') {
-        return err.message = (`Error in ${err.value} item: Only 10 items are allowed in one purchase order`);
+      // Check MENGE is present in the request data
+    if (data.MENGE !== undefined) {
+      const MENGEValue = data.MENGE;
+      
+      if (MENGEValue == 0) {
+        req.error({
+          message: "Quantity value should be greater than zero.",
+          target: "MENGE",
+        });
+      } else if (MENGEValue < 0) {
+        req.error({
+          message: "Negative numbers are not allowed.",
+          target: "MENGE",
+        });
+      } else if (MENGEValue > 1000) {
+        req.error({
+          message: "Quantity value should not exceed 1000.",
+          target: "MENGE",
+        });
+      }
     }
   });
 
-    // if(err.element === 'MENGE'){
-    //   if(err.value === 0){
-    //     return err.message = (err,`zero is not allowed!`);
-    //   }else if(err.value > 1000){
-    //     return err.message = (`Quantity greater than 1000 is not allowed!`);
-    //   }else{
-    //     return err.message = (`Negative nuumbers are not allowed!`);
-    //   }
+  // Adding vendors to PO Business Partner
+  
+  //check for limiting 10 items
+  this.on("error", async (err) => {
+    console.log("err ***", err);
+    if (err.element === "EBELP") {
+      return (err.message = `Error in ${err.value} item: Only 10 items are allowed in one purchase order`);
+    }
+
+    //BP should not be null
+    if (err.element === "EBELN") {
+      return (err.message = `Error: Business Partner should not be null order`);
+    }
+
+    // if (err == `Error: cannot insert NULL or update to NULL: Not nullable "MENGE" column`) {
+    //   // err =  `Error: cannot insert NULL or update to NULL: Not nullable ${err.values[1][3]} column`
+    //   let errJSON = JSON.stringify(err.values);
+    //   let errParse = JSON.parse(errJSON);
+    //   console.log("MENGE ERROR ###",err.message,errParse);
+    //   err.message = `Error: cannot insert NULL or update to NULL: Not nullable PO Quantity column \n ${errJSON}`
     // }
 
+    
 
+  });
+
+};
+
+
+
+
+
+
+
+
+
+
+  // if(err.element === 'MENGE'){
+  //   if(err.value === 0){
+  //     return err.message = (err,`zero is not allowed!`);
+  //   }else if(err.value > 1000){
+  //     return err.message = (`Quantity greater than 1000 is not allowed!`);
+  //   }else{
+  //     return err.message = (`Negative nuumbers are not allowed!`);
+  //   }
+  // }
 
   // this.on('READ', 'Mard', req=>{
   //     let poitems = SELECT.from `PO_Item` .columns (b => {b.ID , b.EBELN , b.EBELP , b.WERKS,b.MATNR, b.MENGE,b.UOM})
   //     console.log(JSON.stringify(poitems));
   // });
 
-  // this.before('NEW', '', async (req)=> {
+  // this.before('NEW', 'PO_Head', async (req)=> {
 
   // let po_items_Data= JSON.stringify(req.ID)
   // // let po_items_Data= req.ID
@@ -117,4 +141,3 @@ module.exports = async function (srv) {
   // console.log('EBELP !!',req.data.items[0].EBELP);
 
   // });
-};

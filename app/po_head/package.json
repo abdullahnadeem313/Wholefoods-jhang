@@ -1,7 +1,7 @@
 {
     "name": "po_head",
     "version": "0.0.1",
-    "description": "Manage Purchase orders",
+    "description": "Manage Purchase Order",
     "keywords": [
         "ui5",
         "openui5",
