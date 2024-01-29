@@ -74,8 +74,8 @@ context Wholefoods {
 
     entity PO_Head : managed {
         Key ID : UUID @Core.Computed:true; 
-        EBELN : String(10) @assert.notNull; //Purchasing Document Number
-        PARTNER : Association to one BPGeneral; //Business Partner ID
+        EBELN : String(10); //Purchasing Document Number
+        PARTNER : Association to one BPGeneral @mandatory; //Business Partner ID
         items : Composition of many wholefoods.Wholefoods.PO_Item on items.EBELN = $self;
     }
 
@@ -83,9 +83,9 @@ context Wholefoods {
         key ID: UUID @Core.Computed:true;
         EBELN : Association to PO_Head; //Purchasing Document Number
         EBELP : String(10) @assert.range:['0010','0100']; //Item Number
-        WERKS : Association to one Plants not null; //Plant ID
-        MATNR : Association to one Materials not null; //raw Material ID
-        MENGE : Integer not null;// @assert.range:[1,1000];  // PO Quantity
+        WERKS : Association to one Plants @mandatory; //Plant ID
+        MATNR : Association to one Materials @mandatory; //raw Material ID
+        MENGE : Integer @mandatory;// @assert.range:[1,1000];  // PO Quantity
         UOM : String(2) // Unit of Measure
     }
 

@@ -128,7 +128,8 @@
                     "route": "PO_HeadObjectPage"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
