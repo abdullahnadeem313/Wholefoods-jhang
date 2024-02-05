@@ -67,7 +67,7 @@ context Wholefoods {
 // Stock
     entity Mard : managed {
         Key MATNR : Association to one Materials; //Material ID
-        WERKS : Association to one Plants; //Plant ID
+        key WERKS : Association to one Plants; //Plant ID
         LABST : Integer; //Unrestricted Stock
         UOM : String(2); //Unit of Measure
     }
@@ -75,7 +75,7 @@ context Wholefoods {
     entity PO_Head : managed {
         Key ID : UUID @Core.Computed:true; 
         EBELN : String(10); //Purchasing Document Number
-        PARTNER : Association to one BPGeneral @mandatory; //Business Partner ID
+        PARTNER : Association to one BPGeneral; // @mandatory; //Business Partner ID
         items : Composition of many wholefoods.Wholefoods.PO_Item on items.EBELN = $self;
     }
 
@@ -83,10 +83,11 @@ context Wholefoods {
         key ID: UUID @Core.Computed:true;
         EBELN : Association to PO_Head; //Purchasing Document Number
         EBELP : String(10) @assert.range:['0010','0100']; //Item Number
-        WERKS : Association to one Plants @mandatory; //Plant ID
-        MATNR : Association to one Materials @mandatory; //raw Material ID
-        MENGE : Integer @mandatory;// @assert.range:[1,1000];  // PO Quantity
-        UOM : String(2) // Unit of Measure
+        WERKS : Association to one Plants; // @mandatory; //Plant ID
+        MATNR : Association to one Materials; // @mandatory; //raw Material ID
+        MENGE : Integer; // @mandatory;// @assert.range:[1,1000];  // PO Quantity
+        UOM : String(2); // Unit of Measure
+        virtual MATNR_NAME: String;
     }
 
     entity POVendor : managed {

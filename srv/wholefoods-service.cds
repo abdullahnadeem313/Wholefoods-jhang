@@ -18,7 +18,7 @@ service WholefoodsService {
     entity Bprofiles as projection on wholefoods.Wholefoods.Bprofiles;
     @odata.draft.enabled:true
     entity BPTpyes as projection on  wholefoods.Wholefoods.BPTpyes;
-    // @odata.draft.enabled:true
+    
     entity Mard as projection on wholefoods.Wholefoods.Mard;
     @odata.draft.enabled:true
     entity PO_Head as projection on wholefoods.Wholefoods.PO_Head;
@@ -26,7 +26,6 @@ service WholefoodsService {
     entity PO_Item as projection on wholefoods.Wholefoods.PO_Item;
     
     entity POVendor as select from Bprofiles{PARTNER,ROLE,PARTNER.NAME}  where ROLE.ROLE = 'VEND';
-
 
     entity rawMaterials as select from Materials where MTART.MTART = 'ROH';
 

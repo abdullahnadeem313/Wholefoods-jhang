@@ -27,6 +27,7 @@ annotate service.PO_Head {
                 ![@UI.TextArrangement] : #TextFirst,
             },
         },
+        Common.FieldControl:#Mandatory
     );
 }
 
