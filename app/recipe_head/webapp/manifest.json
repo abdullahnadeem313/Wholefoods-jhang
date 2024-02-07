@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "ns.mard",
+    "id": "ns.recipehead",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -12,8 +12,8 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
-      "version": "1.12.2",
-      "toolsId": "a4fb962b-aae6-4dee-881f-7ab7c1a1660a"
+      "version": "1.12.3",
+      "toolsId": "e4f82aed-085f-4191-ad6f-2c44eca21d01"
     },
     "dataSources": {
       "mainService": {
@@ -27,8 +27,8 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "mard-manage": {
-          "semanticObject": "mard",
+        "recipe_head-manage": {
+          "semanticObject": "recipe_head",
           "action": "manage",
           "title": "{{flpTitle}}",
           "signature": {
@@ -58,7 +58,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.4",
+      "minUI5Version": "1.120.6",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -74,7 +74,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "ns.mard.i18n.i18n"
+          "bundleName": "ns.recipehead.i18n.i18n"
         }
       },
       "": {
@@ -99,43 +99,75 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "MardList",
-          "target": "MardList"
+          "name": "Recipe_HeadList",
+          "target": "Recipe_HeadList"
         },
         {
-          "pattern": "Mard({key}):?query:",
-          "name": "MardObjectPage",
-          "target": "MardObjectPage"
+          "pattern": "Recipe_Head({key}):?query:",
+          "name": "Recipe_HeadObjectPage",
+          "target": "Recipe_HeadObjectPage"
+        },
+        {
+          "pattern": "Recipe_Head({key})/recipe_Item({key2}):?query:",
+          "name": "Recipe_ItemObjectPage",
+          "target": "Recipe_ItemObjectPage"
         }
       ],
       "targets": {
-        "MardList": {
+        "Recipe_HeadList": {
           "type": "Component",
-          "id": "MardList",
+          "id": "Recipe_HeadList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Mard",
+              "contextPath": "/Recipe_Head",
               "variantManagement": "Page",
               "navigation": {
-                "Mard": {
+                "Recipe_Head": {
                   "detail": {
-                    "route": "MardObjectPage"
+                    "route": "Recipe_HeadObjectPage"
                   }
                 }
-              },
-              "initialLoad": "Enabled"
+              }
             }
           }
         },
-        "MardObjectPage": {
+        "Recipe_HeadObjectPage": {
           "type": "Component",
-          "id": "MardObjectPage",
+          "id": "Recipe_HeadObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Mard"
+              "contextPath": "/Recipe_Head",
+              "navigation": {
+                "recipe_Item": {
+                  "detail": {
+                    "route": "Recipe_ItemObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "recipe_Item/@com.sap.vocabularies.UI.v1.LineItem#RecipeItemsInformation": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "createAtEnd": true,
+                      "name": "Inline"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Recipe_ItemObjectPage": {
+          "type": "Component",
+          "id": "Recipe_ItemObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Recipe_Head/recipe_Item"
             }
           }
         }

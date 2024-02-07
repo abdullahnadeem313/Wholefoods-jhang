@@ -68,6 +68,10 @@ modules:
       - nspohead.zip
       name: nspohead
       target-path: resources/
+    - artifacts:
+      - nsrecipehead.zip
+      name: nsrecipehead
+      target-path: resources/
 - name: nsplants
   type: html5
   path: app/plants
@@ -161,6 +165,16 @@ modules:
 - name: nspohead
   type: html5
   path: app/po_head
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nsrecipehead
+  type: html5
+  path: app/recipe_head
   build-parameters:
     build-result: dist
     builder: custom

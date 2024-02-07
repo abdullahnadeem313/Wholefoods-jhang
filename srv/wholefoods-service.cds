@@ -29,5 +29,11 @@ service WholefoodsService {
 
     entity rawMaterials as select from Materials where MTART.MTART = 'ROH';
 
+    @odata.draft.enabled:true
+    entity Recipe_Head as projection on wholefoods.Wholefoods.Recipe_Head;
+
+    entity Recipe_Item as projection on wholefoods.Wholefoods.Recipe_Item;
+
+    entity finishedMaterials as select from Materials where MTART.MTART = 'FERT';
 }
 

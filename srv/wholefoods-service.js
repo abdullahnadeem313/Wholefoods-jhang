@@ -20,26 +20,26 @@ module.exports = async function (srv) {
       console.log("calling method name: " + methodName);
     }
   });
-// Adding Delete functionality
-  this.before('DELETE', "PO_Head", async (req) => {
-    let PO_ID = req.data.ID;
+  // Adding Delete functionality
+//   this.before('DELETE', "PO_Head", async (req) => {
+//     let PO_ID = req.data.ID;
 
-    console.log("PO_ID =", req.data.ID);
-    const poItem = await SELECT.from('WholefoodsService.PO_Item').columns('MATNR_MATNR', 'WERKS_WERKS', 'MENGE', 'UOM').where({ EBELN_ID: PO_ID });
-    console.log('poItem', poItem);
-    for (let i = 0; i < poItem.length; i++) {
-        const item = poItem[i];
+//     console.log("PO_ID =", req.data.ID);
+//     const poItem = await SELECT.from('WholefoodsService.PO_Item').columns('MATNR_MATNR', 'WERKS_WERKS', 'MENGE', 'UOM').where({ EBELN_ID: PO_ID });
+//     console.log('poItem', poItem);
+//     for (let i = 0; i < poItem.length; i++) {
+//         const item = poItem[i];
 
-        let mardTable = await SELECT.from('WholefoodsService.Mard').where({ MATNR_MATNR: item.MATNR_MATNR, WERKS_WERKS: item.WERKS_WERKS }).columns('MATNR_MATNR', 'WERKS_WERKS', 'LABST', 'UOM');
-        console.log('mardTable', mardTable);
+//         let mardTable = await SELECT.from('WholefoodsService.Mard').where({ MATNR_MATNR: item.MATNR_MATNR, WERKS_WERKS: item.WERKS_WERKS }).columns('MATNR_MATNR', 'WERKS_WERKS', 'LABST', 'UOM');
+//         console.log('mardTable', mardTable);
 
-        if (mardTable[0].LABST === poItem[i].MENGE) {
-            await DELETE.from('WholefoodsService.Mard').where({ WERKS_WERKS: mardTable[0].WERKS_WERKS, MATNR_MATNR: mardTable[0].MATNR_MATNR });
-        } else {
-            await UPDATE('WholefoodsService.Mard').set({ LABST: { '-=': poItem[i].MENGE } }).where({ MATNR_MATNR: mardTable[0].MATNR_MATNR, WERKS_WERKS: mardTable[0].WERKS_WERKS });
-        }
-    }
-});
+//         if (mardTable[0].LABST === poItem[i].MENGE) {
+//             await DELETE.from('WholefoodsService.Mard').where({ WERKS_WERKS: mardTable[0].WERKS_WERKS, MATNR_MATNR: mardTable[0].MATNR_MATNR });
+//         } else {
+//             await UPDATE('WholefoodsService.Mard').set({ LABST: { '-=': poItem[i].MENGE } }).where({ MATNR_MATNR: mardTable[0].MATNR_MATNR, WERKS_WERKS: mardTable[0].WERKS_WERKS });
+//         }
+//     }
+// });
 
   this.before("CREATE", "PO_Head", async (req) => {
     let purNum = await SELECT.from(PO_Head).columns("EBELN");
@@ -170,17 +170,62 @@ module.exports = async function (srv) {
         err.message = errorMessage;
       }
     }); 
-    
-    this.after('EDIT',PO_Head,async req=>{
+    //EDIT part
+  // this.before('UPDATE', PO_Head, async req=>{
+  
+  //   let POItemJSON = JSON.stringify(req.data.items);
+  //   let updatedPOItems = req.data.items;
+  //   console.log(">>>## after Edit "+ POItemJSON);
 
-      console.log(">>>## "+JSON.stringify(req));
-    });
+  //   // const po_ItemNoEdit = await SELECT.from(PO_Item);
+  //   // console.log(">>>## before Edit"+JSON.stringify(po_ItemNoEdit));
 
+
+  //   for (const item of updatedPOItems) {
+  //     const { ID, EBELP, WERKS_WERKS, MATNR_MATNR, MENGE, UOM } = item;
     
-    this.after('CREATE', 'PO_Head', async (req) => {
-      let poItems = await SELECT.from(PO_Item).columns('MATNR_MATNR', 'WERKS_WERKS','UOM')
-      //   console.log("Adding DATA to MARD !!! \n",poItems);
-      
+  //     // Check if MATNR_MATNR field needs to be updated
+  //     const poItem = await SELECT.from(PO_Item).where({ ID: ID, EBELP: EBELP });
+  //     if (poItem.MATNR_MATNR === MATNR_MATNR) {
+  //       // Check if MATNR_MATNR field needs to be updated
+  //       const existingMard = await SELECT.from(Mard).where({ MATNR_MATNR: MATNR_MATNR }).one();
+  //       if (existingMard) {
+
+  //         let updatedMenge = poItem.MENGE;
+  //         if (MENGE > poItem.MENGE) {
+  //           updatedMenge += MENGE - poItem.MENGE; // increment MENGE
+  //         } else if (MENGE < poItem.MENGE) {
+  //           updatedMenge -= poItem.MENGE - MENGE; // decrement MENGE
+  //         }
+
+  //         await UPDATE(Mard)
+  //           .set({
+  //             LABST: updatedMenge,
+  //             WERKS_WERKS:WERKS_WERKS
+  //           })
+  //           .where({ MATNR_MATNR: MATNR_MATNR });
+  //       } else {
+  //         await INSERT.into(Mard)
+  //           .columns('MATNR_MATNR', 'WERKS_WERKS' , 'LABST', 'UOM')
+  //           .values(MATNR_MATNR, WERKS_WERKS , MENGE, UOM);
+  //       }
+  //     }
+  //   }
+
+  // });
+
+
+  // this.after('EDIT',PO_Head,async req=>{
+
+  //   console.log(">>>## "+JSON.stringify(req));
+  // });
+
+
+  // Adding Data to Mard
+  this.after('CREATE', 'PO_Head', async (req) => {
+    let poItems = await SELECT.from(PO_Item).columns('MATNR_MATNR', 'WERKS_WERKS','UOM')
+    //   console.log("Adding DATA to MARD !!! \n",poItems);
+    
     for (let i = 0; i < poItems.length; ++i) {
       // console.log("\n !!!!!: " + JSON.stringify(poItems[i]))
       // console.log("Inserting Plants and Material ID !!! \n"+ element);
@@ -201,7 +246,7 @@ module.exports = async function (srv) {
       })
       .where({ MATNR_MATNR: poItems[i].MATNR_MATNR, WERKS_WERKS: poItems[i].WERKS_WERKS })
     }
-    
+  
   });
   // Updating UOM
   this.after("UPDATE", PO_Item.drafts,async (req)=>{

@@ -1,4 +1,5 @@
 using WholefoodsService as service from '../../wholefoods-service';
+using from '../../annotations/Materials/materials-fiori';
 
 annotate service.PO_Item {
     ID         @(title: '{i18n>poItemsID}');
@@ -179,24 +180,42 @@ annotate service.PO_Item with @(
 // annotate service.rawMaterials with {
 //     MAKTX @Common.FieldControl : #ReadOnly
 // };
+annotate service.Materials with {
+    MATNR @Common.Text : {
+        $value : MAKTX,
+        ![@UI.TextArrangement] : #TextLast,
+    }
+};
 
 annotate service.Materials with {
     MAKTX @Common.FieldControl: #ReadOnly
 };
-
+annotate service.Materials with {
+    MAKTX @(Common.Text : {
+                $value : MATNR,
+                ![@UI.TextArrangement] : #TextFirst,
+            }
+)};
 annotate service.Materials with {
     UOM @Common.FieldControl: #ReadOnly
 };
-// annotate service.PO_Item with {
-//     UOM @Common.Text : {
-//             $value : UOM,
-//             ![@UI.TextArrangement] : #TextLast,
-//         }
-// };
-// annotate service.PO_Item with {
-//     UOM @UI.MultiLineText : false
-// };
+
 
 annotate service.PO_Item with {
     UOM @Common.FieldControl: #ReadOnly
 };
+
+
+
+annotate service.Plants with {
+    WERKS @Common.Text : {
+        $value : NAME1,
+        ![@UI.TextArrangement] : #TextLast,
+    }
+};
+
+annotate service.Plants with {
+    NAME1 @Common.FieldControl : #ReadOnly
+};
+
+

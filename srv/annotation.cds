@@ -19,3 +19,7 @@ using from './annotations/Mard/mard-fiori';
 using from './annotations/PO_Head/po_head-fiori';
 
 using from './annotations/PO_Items/po_items-fiori';
+
+using from './annotations/Recipe_Head/recipe_head-fiori';
+
+using from './annotations/Recipe_Item/recipe_item-fiori';

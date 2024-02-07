@@ -93,8 +93,6 @@ context Wholefoods {
     entity POVendor : managed {
         key PARTNER : Association to one BPGeneral; //BP ID
         key ROLE : Association to one Roles; //BP Role ID
-        vendorName : String(50); //BP Name
-
         }
 
     entity rawMaterials : managed {
@@ -105,5 +103,28 @@ context Wholefoods {
             UOM   : String(2); //Unit of Measure => UOM
     }
 
+    entity Recipe_Head : managed {
+        key ID: UUID @Core.Computed:true;
+        RECIPE: String(10); //Recipe Number
+        MATNR: Association to finishedMaterials; //Material ID
+        RECIPE_QTY: Integer; //Quantity
+        UOM: String(2); //UOM
+        recipe_Item:Composition of many Recipe_Item on recipe_Item.RECIPE = $self;
+    }
 
+    entity Recipe_Item : managed {
+        key ID: UUID @Core.Computed:true;
+        RECIPE: Association to Recipe_Head; //Recipe Number
+        RECIPE_ITM: String(4); //Item Number
+        MATNR:Association to Materials; //Raw Material
+        RAW_QTY: Decimal; //Raw material Quantity
+        UOM: String(2); //UOM
+    }
+    entity finishedMaterials : managed {
+        key MATNR : String(18); //Material ID => MATNR
+            MTART : Association to one MaterialTypes; //Material Type => MTART
+            MATKL : Association to one MaterialGroups; //Material Group => MATKL
+            MAKTX : String(40); //Material Description => MAKTX
+            UOM   : String(2); //Unit of Measure => UOM
+    }
 }

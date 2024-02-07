@@ -1,5 +1,4 @@
 using WholefoodsService as service from '../../wholefoods-service';
-using from '../../annotations/Materials/materials-fiori';
 using from '../PO_Items/po_items-fiori';
 
 annotate service.PO_Head {
@@ -92,33 +91,10 @@ annotate service.PO_Head with @(
 
 
 
-annotate service.Materials with {
-    MAKTX @(Common.Text : {
-                $value : MATNR,
-                ![@UI.TextArrangement] : #TextFirst,
-            }
-)};
 
-annotate service.Plants with {
-    WERKS @Common.Text : {
-        $value : NAME1,
-        ![@UI.TextArrangement] : #TextLast,
-    }
-};
-
-annotate service.Plants with {
-    NAME1 @Common.FieldControl : #ReadOnly
-};
 
 
 annotate service.PO_Head with {
     EBELN @Common.FieldControl : #ReadOnly
-};
-
-annotate service.Materials with {
-    MATNR @Common.Text : {
-        $value : MAKTX,
-        ![@UI.TextArrangement] : #TextLast,
-    }
 };
 
