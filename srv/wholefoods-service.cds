@@ -34,6 +34,6 @@ service WholefoodsService {
 
     entity Recipe_Item as projection on wholefoods.Wholefoods.Recipe_Item;
 
-    entity finishedMaterials as select from Materials where MTART.MTART = 'FERT';
+    entity finishedMaterials as select from Materials where ((Materials.MATNR not in (select MATNR from Recipe_Head))and (MTART.MTART = 'FERT'));
 }
 

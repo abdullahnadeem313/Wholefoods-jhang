@@ -55,6 +55,16 @@ annotate service.Mard with {
     title: '{i18n>unitOfMeasure}', );
 };
 
+// annotate service.Materials with {
+//     UOM @(title: '{i18n>unitOfMeasure}')
+// };
+
+// SideEffects
+annotate service.Mard @(Common: {SideEffects: {
+    $Type           : 'Common.SideEffectsType',
+    SourceProperties: ['MATNR_MATNR'], //feilds on the basis of which we want to get value
+    TargetEntities  : ['MATNR'] //feilds on which we want to get value
+}});
 /*
  *
  *
@@ -95,7 +105,7 @@ annotate service.Mard with @(UI: {
         },
         {
             $Type                : 'UI.DataField',
-            Value                : UOM,
+            Value                : MATNR.UOM,
             ![@HTML5.CssDefaults]: {
                 $Type: 'HTML5.CssDefaultsType',
                 width: '25%',
@@ -151,7 +161,7 @@ annotate service.Mard with @(UI: {
         {Value: MATNR_MATNR},
         {Value: WERKS_WERKS},
         {Value: LABST},
-        {Value: UOM},
+        {Value: MATNR.UOM},
 
     ]},
 

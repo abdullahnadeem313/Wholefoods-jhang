@@ -21,6 +21,7 @@ context Wholefoods {
             MATKL : Association to one MaterialGroups; //Material Group => MATKL
             MAKTX : String(40); //Material Description => MAKTX
             UOM   : String(2); //Unit of Measure => UOM
+            // MATNR_NAME: String(18);
     }
 
     // @cds.odata.valuelist
@@ -87,7 +88,6 @@ context Wholefoods {
         MATNR : Association to one Materials; // @mandatory; //raw Material ID
         MENGE : Integer; // @mandatory;// @assert.range:[1,1000];  // PO Quantity
         UOM : String(2); // Unit of Measure
-        virtual MATNR_NAME: String;
     }
 
     entity POVendor : managed {
@@ -102,12 +102,12 @@ context Wholefoods {
             MAKTX : String(40); //Material Description => MAKTX
             UOM   : String(2); //Unit of Measure => UOM
     }
-
+    
     entity Recipe_Head : managed {
         key ID: UUID @Core.Computed:true;
         RECIPE: String(10); //Recipe Number
-        MATNR: Association to finishedMaterials; //Material ID
-        RECIPE_QTY: Integer; //Quantity
+        MATNR: Association to Materials; //Material ID
+        RECIPE_QTY: Integer default 1; //Quantity
         UOM: String(2); //UOM
         recipe_Item:Composition of many Recipe_Item on recipe_Item.RECIPE = $self;
     }

@@ -106,11 +106,6 @@
           "pattern": "Recipe_Head({key}):?query:",
           "name": "Recipe_HeadObjectPage",
           "target": "Recipe_HeadObjectPage"
-        },
-        {
-          "pattern": "Recipe_Head({key})/recipe_Item({key2}):?query:",
-          "name": "Recipe_ItemObjectPage",
-          "target": "Recipe_ItemObjectPage"
         }
       ],
       "targets": {
@@ -128,7 +123,8 @@
                     "route": "Recipe_HeadObjectPage"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
@@ -140,13 +136,7 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/Recipe_Head",
-              "navigation": {
-                "recipe_Item": {
-                  "detail": {
-                    "route": "Recipe_ItemObjectPage"
-                  }
-                }
-              },
+              "navigation": {},
               "controlConfiguration": {
                 "recipe_Item/@com.sap.vocabularies.UI.v1.LineItem#RecipeItemsInformation": {
                   "tableSettings": {
@@ -157,17 +147,6 @@
                   }
                 }
               }
-            }
-          }
-        },
-        "Recipe_ItemObjectPage": {
-          "type": "Component",
-          "id": "Recipe_ItemObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Recipe_Head/recipe_Item"
             }
           }
         }
