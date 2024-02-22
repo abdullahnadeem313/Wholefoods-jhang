@@ -20,3 +20,5 @@ using from './mard/annotations';
 using from './po_head/annotations';
 
 using from './recipe_head/annotations';
+
+using from './poui5/annotations';

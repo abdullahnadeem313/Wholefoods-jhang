@@ -1,0 +1,83 @@
+<mvc:View
+    controllerName="ns.poui5.controller.poObjectPage"
+    class="sapUiSizeCompact"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
+            <Table
+                growing="true"
+                id="PurchaseOrderDetail"
+                items= '{items}'
+                mode="MultiSelect"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            level="H1"
+                            text="Purchase Order Items"
+                        />
+                        <ToolbarSpacer />
+                        <Button
+                            icon="sap-icon://add"
+                            id="create"
+                            press="onCreateOrder"
+                            text="Create"
+                            tooltip="Create Purchase Order"
+                        />
+                        <Button
+                            icon="sap-icon://delete"
+                            id="delete"
+                            press="onDeleteOrder"
+                            text="Delete"
+                            tooltip="Delete Purchase Order"
+                        />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <header>
+                            <Text text="{i18n>itemNumber}" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="{i18n>plantID}" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="{i18n>rawMaterialID}" />
+                        </header>
+                    </Column>
+                    <Column hAlign="Right" minScreenWidth="Desktop">
+                        <header>
+                            <Text text="{i18n>poQuantity}" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="{i18n>unitOfMeasure}" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier text="{EBELP}" />
+                            <Text text="{WERKS_WERKS}" />
+                            <Text text="{MATNR_MATNR}" />
+                            <Text  text="{MENGE}" />
+                            <Text text="{UOM}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

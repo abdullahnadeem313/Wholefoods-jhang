@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="ns.poui5.controller.poListReport"
+    class="sapUiSizeCompact"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page
+        id="page"
+        title="{i18n>title}">
+        <content>
+            <Table
+                growing="true"
+                growingThreshold="10"
+                id="PurchaseOrderList"
+                items="{path : '/PO_Head', 
+                sorter : {
+                    path : 'EBELN' ,
+                    group : false
+                }	,
+                parameters: { 
+                    $expand : { 
+                        items : {
+							$select : ['EBELP', 'MATNR_MATNR',
+								'WERKS_WERKS','MENGE','UOM']
+						}},
+						$select : ['ID', 'PARTNER_PARTNER', 'EBELN'] ,
+						$$ownRequest : true
+					}}" mode="MultiSelect">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            level="H1"
+                            text="Purchase Orders"/>
+                        <ToolbarSpacer />
+                        <Button
+                            icon="sap-icon://add"
+                            id="create"
+                            press="onCreateOrder"
+                            text="Create"
+                            tooltip="Create Purchase Order" />
+                        <Button
+                            icon="sap-icon://delete"
+                            id="delete"
+                            press="onDeleteOrder"
+                            text="Delete"
+                            tooltip="Delete Purchase Order" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                     <Column>
+                        <header>
+                            <Text text="{i18n>purchaseOrderNumber}" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="{i18n>bussinesPartnerName}" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem
+                        type="Navigation"
+                        press="onNavToDetails">
+                        <cells>
+                            <ObjectIdentifier text="{EBELN}" />
+                            <Text text="{PARTNER_PARTNER}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

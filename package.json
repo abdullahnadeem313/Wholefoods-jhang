@@ -16,7 +16,7 @@
     "devDependencies": {
         "@cap-js/sqlite": "^1",
         "@sap/cds-dk": "^7",
-        "@sap/ux-specification": "^1.120.3",
+        "@sap/ux-specification": "^1.120.4",
         "rimraf": "^3.0.2"
     },
     "scripts": {
@@ -36,7 +36,8 @@
         "watch-bp_types": "cds watch --open bp_types/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-mard": "cds watch --open mard/webapp/index.html?sap-ui-xx-viewCache=false",
         "watch-po_head": "cds watch --open po_head/webapp/index.html?sap-ui-xx-viewCache=false",
-        "watch-recipe_head": "cds watch --open recipe_head/webapp/index.html?sap-ui-xx-viewCache=false"
+        "watch-recipe_head": "cds watch --open recipe_head/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-poui5": "cds watch --open poui5/webapp/index.html?sap-ui-xx-viewCache=false"
     },
     "cds": {
         "requires": {

@@ -72,6 +72,10 @@ modules:
       - nsrecipehead.zip
       name: nsrecipehead
       target-path: resources/
+    - artifacts:
+      - nspoui5.zip
+      name: nspoui5
+      target-path: resources/
 - name: nsplants
   type: html5
   path: app/plants
@@ -175,6 +179,16 @@ modules:
 - name: nsrecipehead
   type: html5
   path: app/recipe_head
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nspoui5
+  type: html5
+  path: app/poui5
   build-parameters:
     build-result: dist
     builder: custom
