@@ -1,6 +1,7 @@
 <mvc:View
     controllerName="ns.poui5.controller.poObjectPage"
     class="sapUiSizeCompact"
+    xmlns:form="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
@@ -8,12 +9,60 @@
     <Page
         id="page"
         title="{i18n>title}"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
     >
-        <content>
+        <ObjectHeader
+            responsive="true"
+            fullScreenOptimized="true"
+            title="Purchase Order Number: {EBELN}"
+            id="headerTitle"
+        />
+        <Button
+            id="clickMe"
+            press="onPressClickMe"
+            text="Click Me"
+            class="sapUiResponsiveMargin"
+        />
+        <Page
+            class="sapUiResponsiveContentPadding"
+            showHeader="false"
+        >
+            <form:SimpleForm
+                ariaLabelledBy="objectPageTitle"
+                editable="false"
+                id="objectPage"
+                layout="ResponsiveGridLayout"
+            >
+                <Label
+                    labelFor="poid"
+                    text="Purchase Document Number"
+                />
+                <Text text="{EBELN}" />
+                <!-- <Input
+                    id="poid"
+                    editable="false"
+                    width="50%"
+                    value="{EBELN}"
+                /> -->
+                <Label
+                    labelFor="bpid"
+                    text="Business Partner ID"
+                />
+                <!-- <ObjectIdentifier text="{PARTNER_PARTNER} ({PARTNER/NAME})"></ObjectIdentifier> -->
+                <Text text="{PARTNER_PARTNER} ({PARTNER/NAME})" />
+                <!-- <Input
+                    id="bpid"
+                    editable="false"
+                    width="50%"
+                    value="{PARTNER_PARTNER}"
+                /> -->
+            </form:SimpleForm>
+
             <Table
                 growing="true"
                 id="PurchaseOrderDetail"
-                items= '{items}'
+                items='{items}'
                 mode="MultiSelect"
             >
                 <headerToolbar>
@@ -27,7 +76,7 @@
                             icon="sap-icon://add"
                             id="create"
                             press="onCreateOrder"
-                            text="Create"
+                            text="Add"
                             tooltip="Create Purchase Order"
                         />
                         <Button
@@ -55,29 +104,38 @@
                             <Text text="{i18n>rawMaterialID}" />
                         </header>
                     </Column>
-                    <Column hAlign="Right" minScreenWidth="Desktop">
+                    <Column
+                        hAlign="Right"
+                        minScreenWidth="Desktop"
+                    >
                         <header>
                             <Text text="{i18n>poQuantity}" />
                         </header>
                     </Column>
-                    <Column minScreenWidth="Desktop">
+                    <!-- <Column minScreenWidth="Desktop">
                         <header>
                             <Text text="{i18n>unitOfMeasure}" />
                         </header>
-                    </Column>
+                    </Column> -->
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <ObjectIdentifier text="{EBELP}" />
-                            <Text text="{WERKS_WERKS}" />
-                            <Text text="{MATNR_MATNR}" />
-                            <Text  text="{MENGE}" />
-                            <Text text="{UOM}" />
+                            <Text text="{EBELP}" />
+                            <ObjectIdentifier
+                                title="{WERKS_WERKS}"
+                                text="{WERKS/NAME1}"
+                            />
+                            <ObjectIdentifier
+                                title="{MATNR_MATNR}"
+                                text="{MATNR/MAKTX}"
+                            />
+                            <Text text="{path: 'MENGE', formatter: '.formatQuantity'} {UOM}" />
+                            <!-- <Text text="{UOM}" /> -->
                         </cells>
                     </ColumnListItem>
                 </items>
             </Table>
-        </content>
+        </Page>
     </Page>
 </mvc:View>

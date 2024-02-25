@@ -44,10 +44,6 @@
             "db": "hana"
         }
     },
-    "engines": {
-        "node": ">=20.5.0",
-        "npm": ">=10.3.0"
-    },
     "sapux": [
         "app/plants",
         "app/material_types",

@@ -11,6 +11,8 @@
             <Table
                 growing="true"
                 growingThreshold="10"
+                class="sapUiResponsiveMargin"
+                width="auto"
                 id="PurchaseOrderList"
                 items="{path : '/PO_Head', 
                 sorter : {
@@ -33,13 +35,11 @@
                             text="Purchase Orders"/>
                         <ToolbarSpacer />
                         <Button
-                            icon="sap-icon://add"
                             id="create"
                             press="onCreateOrder"
                             text="Create"
                             tooltip="Create Purchase Order" />
                         <Button
-                            icon="sap-icon://delete"
                             id="delete"
                             press="onDeleteOrder"
                             text="Delete"
@@ -63,8 +63,8 @@
                         type="Navigation"
                         press="onNavToDetails">
                         <cells>
-                            <ObjectIdentifier text="{EBELN}" />
-                            <Text text="{PARTNER_PARTNER}" />
+                            <Text text="{EBELN}" />
+                            <ObjectIdentifier title="{PARTNER_PARTNER}" text="{PARTNER/NAME}" />
                         </cells>
                     </ColumnListItem>
                 </items>
