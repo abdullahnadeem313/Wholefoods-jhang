@@ -119,9 +119,16 @@
         },
         {
           "name": "TargetpoObjectPage",
-          "pattern": "{poHead}",
+          "pattern": "objectPage/{poHead}",
           "target": [
             "TargetpoObjectPage"
+          ]
+        },
+        {
+          "name": "Targetcreate",
+          "pattern": "create",
+          "target": [
+            "Targetcreate"
           ]
         }
       ],
@@ -132,16 +139,21 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "poListReport",
-          "viewName": "poListReport",
-          "viewLevel": 1
+          "viewName": "poListReport"
         },
         "TargetpoObjectPage": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "poObjectPage",
-          "viewName": "poObjectPage",
-          "viewLevel": 2
+          "viewName": "poObjectPage"
+        },
+        "Targetcreate": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "create",
+          "viewName": "create"
         }
       }
     },

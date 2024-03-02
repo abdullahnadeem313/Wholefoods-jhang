@@ -40,11 +40,11 @@ sap.ui.define([
                 let objHeader = this.byId("headerTitle");
                 objHeader.setTitle('items')
             },
-            formatQuantity: function (value) {
-                if (value || value === 0) {
-                    return parseFloat(value).toFixed(2);
-                }
-                return value;
-            }
+            // formatQuantity: function (value) {
+            //     if (value || value === 0) {
+            //         return parseFloat(value).toFixed(2);
+            //     }
+            //     return value;
+            // }
         });
     });

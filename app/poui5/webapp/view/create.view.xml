@@ -1,5 +1,6 @@
 <mvc:View
-    controllerName="ns.poui5.controller.poObjectPage"
+    xmlns:core="sap.ui.core"
+    controllerName="ns.poui5.controller.create"
     class="sapUiSizeCompact"
     xmlns:form="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
@@ -15,7 +16,7 @@
         <ObjectHeader
             responsive="true"
             fullScreenOptimized="true"
-            title="Purchase Order Number: {EBELN}"
+            title="Purchase Order"
             id="headerTitle"
         />
         <Button
@@ -24,7 +25,10 @@
             text="Click Me"
             class="sapUiResponsiveMargin"
         />
-
+        <!-- <Page
+            class="sapUiResponsiveContentPadding"
+            showHeader="false"
+        > -->
         <Panel
             id="productDetailsPanel"
             class="sapUiResponsiveMargin"
@@ -40,25 +44,27 @@
                     labelFor="poid"
                     text="Purchase Document Number"
                 />
-                <Text text="{EBELN}" />
-                <!-- <Input
+                <!-- <Text text="{EBELN}" /> -->
+                <Input
                     id="poid"
-                    editable="false"
-                    width="50%"
-                    value="{EBELN}"
-                /> -->
+                    editable="true"
+                    width="20rem"
+                    valueLiveUpdate="true"
+                />
                 <Label
                     labelFor="bpid"
                     text="Business Partner ID"
                 />
-                <!-- <ObjectIdentifier text="{PARTNER_PARTNER} ({PARTNER/NAME})"></ObjectIdentifier> -->
-                <Text text="{PARTNER_PARTNER} ({PARTNER/NAME})" />
-                <!-- <Input
+                <Select
                     id="bpid"
-                    editable="false"
-                    width="50%"
-                    value="{PARTNER_PARTNER}"
-                /> -->
+                    items='{ path: "/POVendor" }'
+                    width="20rem"
+                >
+                    <core:Item
+                        key="{ PARTNER_PARTNER }"
+                        text="{PARTNER/NAME}"
+                    />
+                </Select>
             </form:SimpleForm>
         </Panel>
         <Panel
@@ -68,8 +74,7 @@
         >
             <Table
                 growing="true"
-                id="PurchaseOrderDetail"
-                items='{items}'
+                id="poItemTable"
                 mode="MultiSelect"
             >
                 <headerToolbar>
@@ -82,16 +87,14 @@
                         <Button
                             icon="sap-icon://add"
                             id="create"
-                            press="onCreateOrder"
+                            press="onAddItems"
                             text="Add"
-                            tooltip="Create Purchase Order"
                         />
                         <Button
                             icon="sap-icon://delete"
                             id="delete"
-                            press="onDeleteOrder"
+                            press="onDeleteItems"
                             text="Delete"
-                            tooltip="Delete Purchase Order"
                         />
                     </Toolbar>
                 </headerToolbar>
@@ -121,35 +124,26 @@
                         </header>
                     </Column>
                 </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{EBELP}" />
-                            <ObjectIdentifier
-                                title="{WERKS_WERKS}"
-                                text="{WERKS/NAME1}"
-                            />
-                            <ObjectIdentifier
-                                title="{MATNR_MATNR}"
-                                text="{MATNR/MAKTX}"
-                            />
-                            <!-- <Text text="{path: 'MENGE', formatter: '.formatQuantity'} {UOM}" /> -->
-                            <ObjectNumber
-                                id="uomID"
-                                number="{
-                                path: 'MENGE',
-                                type: 'sap.ui.model.type.Float',
-                                formatOptions: {
-                                    minFractionDigits:2
-                                }
-                            }"
-                                unit="{UOM}"
-                                emphasized="false"
-                            />
-                        </cells>
-                    </ColumnListItem>
-                </items>
+                <items />
             </Table>
         </Panel>
+        <!-- </Page> -->
+        <footer >
+            <OverflowToolbar >
+                <ToolbarSpacer />
+                <Button
+                    id="saveBtn"
+                    text="Save"
+                    type="Emphasized"
+                    class="sapUiTinyMargin"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            closeOverflowOnInteraction="true"
+                        />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>

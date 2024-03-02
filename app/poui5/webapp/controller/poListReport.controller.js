@@ -17,7 +17,15 @@ sap.ui.define([
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("TargetpoObjectPage", { poHead: oItem.getBindingContext().getPath().substring("/PO_Head".length) });
                 
-            }
+            },
+
+            onCreateOrder : function (oEvent) {
+                // var oItem = oEvent.getSource();
+
+                var oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("Targetcreate");
+                
+            },
         });
     });
     

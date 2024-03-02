@@ -6,7 +6,7 @@
     xmlns="sap.m">
     <Page
         id="page"
-        title="{i18n>title}">
+        title="{i18n>title}" titleAlignment="Auto" >
         <content>
             <Table
                 growing="true"
@@ -15,10 +15,10 @@
                 width="auto"
                 id="PurchaseOrderList"
                 items="{path : '/PO_Head', 
-                sorter : {
-                    path : 'EBELN' ,
-                    group : false
-                }	,
+                    sorter : {
+                        path : 'EBELN' ,
+                        group : false
+                    }	,
                 parameters: { 
                     $expand : { 
                         items : {
