@@ -1,9 +1,9 @@
 <mvc:View
-    xmlns:core="sap.ui.core"
-    controllerName="ns.poui5.controller.create"
+    controllerName="ns.poui5.controller.poListReport"
     class="sapUiSizeCompact"
     xmlns:form="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     displayBlock="true"
     xmlns="sap.m"
 >
@@ -16,13 +16,13 @@
         <ObjectHeader
             responsive="true"
             fullScreenOptimized="true"
-            title="Purchase Order"
+            title="{i18n>purchaseOrder}"
             id="headerTitle"
         />
         <Button
             id="clickMe"
             press="onPressClickMe"
-            text="Click Me"
+            text="{i18n>clickMe}"
             class="sapUiResponsiveMargin"
         />
         <!-- <Page
@@ -42,7 +42,7 @@
             >
                 <Label
                     labelFor="poid"
-                    text="Purchase Document Number"
+                    text="{i18n>purchaseDocumentNumber}"
                 />
                 <!-- <Text text="{EBELN}" /> -->
                 <Input
@@ -53,7 +53,7 @@
                 />
                 <Label
                     labelFor="bpid"
-                    text="Business Partner ID"
+                    text="{i18n>businessPartnerID}"
                 />
                 <Select
                     id="bpid"
@@ -61,7 +61,7 @@
                     width="20rem"
                 >
                     <core:Item
-                        key="{ PARTNER_PARTNER }"
+                        key="{PARTNER_PARTNER}"
                         text="{PARTNER/NAME}"
                     />
                 </Select>
@@ -81,20 +81,20 @@
                     <Toolbar>
                         <Title
                             level="H1"
-                            text="Purchase Order Items"
+                            text="{i18n>purchaseOrderItems}"
                         />
                         <ToolbarSpacer />
                         <Button
                             icon="sap-icon://add"
                             id="create"
                             press="onAddItems"
-                            text="Add"
+                            text="{i18n>add}"
                         />
                         <Button
                             icon="sap-icon://delete"
                             id="delete"
                             press="onDeleteItems"
-                            text="Delete"
+                            text="{i18n>delete}"
                         />
                     </Toolbar>
                 </headerToolbar>
@@ -124,7 +124,7 @@
                         </header>
                     </Column>
                 </columns>
-                <items />
+                <items> </items>
             </Table>
         </Panel>
         <!-- </Page> -->
@@ -133,9 +133,10 @@
                 <ToolbarSpacer />
                 <Button
                     id="saveBtn"
-                    text="Save"
+                    text="{i18n>save}"
                     type="Emphasized"
                     class="sapUiTinyMargin"
+                    press="onPressSaveBtn"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData

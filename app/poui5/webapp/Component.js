@@ -5,9 +5,9 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "ns/poui5/model/models"
+        // "ns/poui5/model/models"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device,) {
         "use strict";
 
         return UIComponent.extend("ns.poui5.Component", {
@@ -28,7 +28,7 @@ sap.ui.define([
                 this.getRouter().initialize();
 
                 // set the device model
-                this.setModel(models.createDeviceModel(), "device");
+                // this.setModel(models.createDeviceModel(), "device");
             }
         });
     }

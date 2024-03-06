@@ -13,7 +13,7 @@
                 growingThreshold="10"
                 class="sapUiResponsiveMargin"
                 width="auto"
-                id="PurchaseOrderList"
+                id="PurchaseOrderListID"
                 items="{path : '/PO_Head', 
                     sorter : {
                         path : 'EBELN' ,
