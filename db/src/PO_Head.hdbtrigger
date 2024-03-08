@@ -1,0 +1,12 @@
+TRIGGER poheader BEFORE
+  INSERT
+   ON wholefoods_Wholefoods_PO_Head REFERENCING NEW ROW MYNEWROW FOR EACH ROW 
+BEGIN
+  DECLARE pohdr_id INTEGER;
+  SELECT MAX(CAST(EBELN AS INTEGER)) INTO pohdr_id FROM wholefoods_Wholefoods_PO_Head;
+  IF :pohdr_id is NULL THEN  
+  pohdr_id = 1000000000;
+  END IF;
+  pohdr_id := pohdr_id + 1;
+  MYNEWROW.EBELN = :pohdr_id;
+END;

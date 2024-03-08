@@ -3,14 +3,16 @@
     class="sapUiSizeCompact"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m"
+>
     <Page
         id="page"
-        title="{i18n>title}" titleAlignment="Auto" >
+        title="{i18n>title}"
+        titleAlignment="Auto"
+    >
         <content>
             <Table
                 growing="true"
-                growingThreshold="10"
                 class="sapUiResponsiveMargin"
                 width="auto"
                 id="PurchaseOrderListID"
@@ -27,27 +29,36 @@
 						}},
 						$select : ['ID', 'PARTNER_PARTNER', 'EBELN'] ,
 						$$ownRequest : true
-					}}" mode="MultiSelect">
+					}}"
+                mode="MultiSelect"
+            >
                 <headerToolbar>
                     <Toolbar>
                         <Title
                             level="H1"
-                            text="Purchase Orders"/>
+                            text="Purchase Orders"
+                        />
                         <ToolbarSpacer />
+                        <SearchField
+                            width="50%"
+                            search=".onFilterProducts"
+                        />
                         <Button
                             id="create"
                             press="onCreateOrder"
                             text="Create"
-                            tooltip="Create Purchase Order" />
+                            tooltip="Create Purchase Order"
+                        />
                         <Button
                             id="delete"
                             press="onDeleteOrder"
                             text="Delete"
-                            tooltip="Delete Purchase Order" />
+                            tooltip="Delete Purchase Order"
+                        />
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                     <Column>
+                    <Column>
                         <header>
                             <Text text="{i18n>purchaseOrderNumber}" />
                         </header>
@@ -61,10 +72,14 @@
                 <items>
                     <ColumnListItem
                         type="Navigation"
-                        press="onNavToDetails">
+                        press="onNavToDetails"
+                    >
                         <cells>
                             <Text text="{EBELN}" />
-                            <ObjectIdentifier title="{PARTNER_PARTNER}" text="{PARTNER/NAME}" />
+                            <ObjectIdentifier
+                                title="{PARTNER_PARTNER}"
+                                text="{PARTNER/NAME}"
+                            />
                         </cells>
                     </ColumnListItem>
                 </items>

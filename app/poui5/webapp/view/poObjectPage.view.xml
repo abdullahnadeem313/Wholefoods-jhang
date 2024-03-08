@@ -18,13 +18,25 @@
             title="Purchase Order Number: {EBELN}"
             id="headerTitle"
         />
-        <Button
-            id="clickMe"
-            press="onPressClickMe"
-            text="Click Me"
-            class="sapUiResponsiveMargin"
-        />
 
+        <FlexBox
+            alignItems="Start"
+            justifyContent="End"
+            class="sapUiResponsiveMargin"
+        >
+            <Button
+                id="clickMe"
+                press="onPressClickMe"
+                text="{i18n>clickMe}"
+                class="sapUiSmallMarginEnd"
+            />
+            <Button
+                id="EDIT"
+                press="onPressEdit"
+                text="{i18n>Edit}"
+                type="Emphasized"
+            />
+        </FlexBox>
         <Panel
             id="productDetailsPanel"
             class="sapUiResponsiveMargin"
@@ -70,7 +82,6 @@
                 growing="true"
                 id="PurchaseOrderDetail"
                 items='{items}'
-                mode="MultiSelect"
             >
                 <headerToolbar>
                     <Toolbar>
@@ -85,6 +96,7 @@
                             press="onCreateOrder"
                             text="Add"
                             tooltip="Create Purchase Order"
+                            enabled="false"
                         />
                         <Button
                             icon="sap-icon://delete"
@@ -92,6 +104,7 @@
                             press="onDeleteOrder"
                             text="Delete"
                             tooltip="Delete Purchase Order"
+                            enabled="false"
                         />
                     </Toolbar>
                 </headerToolbar>
@@ -143,7 +156,7 @@
                                     minFractionDigits:2
                                 }
                             }"
-                                unit="{UOM}"
+                                unit="{MATNR/UOM}"
                                 emphasized="false"
                             />
                         </cells>

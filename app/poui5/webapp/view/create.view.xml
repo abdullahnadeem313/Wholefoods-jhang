@@ -19,12 +19,18 @@
             title="{i18n>purchaseOrder}"
             id="headerTitle"
         />
-        <Button
-            id="clickMe"
-            press="onPressClickMe"
-            text="{i18n>clickMe}"
+               <FlexBox
+            alignItems="Start"
+            justifyContent="End"
             class="sapUiResponsiveMargin"
-        />
+        >
+            <Button
+                id="clickMe"
+                press="onPressClickMe"
+                text="{i18n>clickMe}"
+            />
+        </FlexBox>
+
         <!-- <Page
             class="sapUiResponsiveContentPadding"
             showHeader="false"
@@ -40,22 +46,22 @@
                 id="objectPage"
                 layout="ResponsiveGridLayout"
             >
-                <Label
-                    labelFor="poid"
-                    text="{i18n>purchaseDocumentNumber}"
+                <Label text="{i18n>purchaseDocumentNumber}" />
+                <Text
+                    id="poid"
+                    text=""
                 />
-                <!-- <Text text="{EBELN}" /> -->
-                <Input
+                <!-- <Input
                     id="poid"
                     editable="true"
                     width="20rem"
                     valueLiveUpdate="true"
-                />
+                /> -->
                 <Label
                     labelFor="bpid"
                     text="{i18n>businessPartnerID}"
                 />
-                <Select
+                <ComboBox
                     id="bpid"
                     items='{ path: "/POVendor" }'
                     width="20rem"
@@ -64,7 +70,7 @@
                         key="{PARTNER_PARTNER}"
                         text="{PARTNER/NAME}"
                     />
-                </Select>
+                </ComboBox>
             </form:SimpleForm>
         </Panel>
         <Panel
@@ -74,6 +80,7 @@
         >
             <Table
                 growing="true"
+                growingThreshold="10"
                 id="poItemTable"
                 mode="MultiSelect"
             >
@@ -115,7 +122,6 @@
                         </header>
                     </Column>
                     <Column
-                        hAlign="Right"
                         minScreenWidth="Desktop"
                         demandPopin="true"
                     >
@@ -124,19 +130,24 @@
                         </header>
                     </Column>
                 </columns>
-                <items> </items>
+                <items />
             </Table>
         </Panel>
         <!-- </Page> -->
-        <footer >
-            <OverflowToolbar >
+        <footer>
+            <OverflowToolbar>
                 <ToolbarSpacer />
                 <Button
                     id="saveBtn"
                     text="{i18n>save}"
                     type="Emphasized"
-                    class="sapUiTinyMargin"
                     press="onPressSaveBtn"
+                />
+                <Button
+                    id="cancelBtn"
+                    text="{i18n>cancel}"
+                    class="sapUiTinyMargin"
+                    press="onPressCancelBtn"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData
