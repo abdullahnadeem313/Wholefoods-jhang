@@ -1,12 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
+    "sap/m/MessageToast",
 	"sap/ui/model/FilterOperator"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller,Filter,FilterOperator) {
+    function (Controller,Filter,FilterOperator,MessageToast) {
         "use strict";
         var oPOtable;
         var oPOtableView;
@@ -34,8 +35,8 @@ sap.ui.define([
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("Targetcreate");
 
-                var oTable = this.byId("poItemTable");
-                oTable.addItem(oItem);
+                // var oTable = this.byId("poItemTable");
+                // oTable.addItem(oItem);
             },
             onFilterProducts(oEvent) {
                 // build filter array
@@ -68,8 +69,6 @@ sap.ui.define([
                 objHeader.setTitle('items')
             },
             onAddItems: function (oEvent) {
-
-
                 // item number 
                 let aTableLength = this.byId("poItemTable").getItems().length;
                 let itemNumber = String( aTableLength * 10 + 10);
@@ -103,7 +102,7 @@ sap.ui.define([
                                 // console.log("oContext ###",oContext);
                                 let row = oEvent.getSource().sId.replace('__box','')
                                 // let row = oEvent.getSource().sId.replace('__select','')
-                                row = Math.floor(row/2);
+                                row = Math.floor(row/2)-1;
                                 // console.log("row ###",row);
                                 let quantityID = '__input'+ row
                                 // console.log("quantityID ###",quantityID);
@@ -113,11 +112,10 @@ sap.ui.define([
                         }),
                         // new sap.m.Input({ width: 'auto' }),
                         new sap.m.StepInput({ 
-                            width: 'auto', 
                             min: 1, 
                             max: 1000, 
                             step: 1, 
-                            description: '{UOM}', 
+                            description: ' {UOM}', 
                             enabled: true, 
                             editable: true, 
                             displayValuePrecision: 2 }),
@@ -126,7 +124,7 @@ sap.ui.define([
                 var oTable = this.byId("poItemTable");
                 oTable.addItem(oItem);
             },
-            onPressSaveBtn: function (oEvent) {
+            onCreatePOBtn: function (oEvent) {
                 var oView = this.getView();
                 // var oModel = oView.getModel();
 
@@ -142,7 +140,7 @@ sap.ui.define([
 
                 for (let x = 0; x < aTableItems.length; x++) {
                     let dataObj = {
-                        EBELP: aTableItems[x].getCells()[0].getText().toString(),
+                        EBELP: aTableItems[x].getCells()[0].getText(),
                         WERKS_WERKS: aTableItems[x].getCells()[1].getSelectedItem().mProperties.key              ,
                         MATNR_MATNR: aTableItems[x].getCells()[2].getSelectedItem().mProperties.key,
                         MENGE: parseInt(aTableItems[x].getCells()[3].getValue()),
@@ -164,17 +162,8 @@ sap.ui.define([
                     items: aItems
                 }
                 console.log('oPurchaseOrder ###',oPurchaseOrder);
-                oPOtable.create(oPurchaseOrder, {
-                    success: function (oData) {
-                        // sales order successfully created
-                        MessageToast.show("Purchase Order created successfully");
-                    },
-                    error: function (oError) {
-                        // handle rejection of entity creation
-                        MessageToast.show("Error occurred while creating Purchase Order");
-                    }
-                });
-
+                oPOtable.create(oPurchaseOrder,false,true);
+                
                 const oHistory = sap.ui.core.routing.History.getInstance();
                 const sPreviousHash = oHistory.getPreviousHash();
 
@@ -193,10 +182,20 @@ sap.ui.define([
                 console.log('oPOtableContext ###',oPOtableContext);
                 
                 oPOtableContext.delete("$auto").then(function () {
-                        // sales order successfully deleted
+                        // Purchase Order successfully deleted
+                        // MessageToast.show("Purchase Order deleted successfully");
                    }, function (oError) {
                         // do error handling
+                        // MessageToast.show("Error occurred while deleting Purchase Order");
                    });
+            },
+            toggleDraft: function (sAction) {
+                var oObject = this.getView();
+                var oContext = oObject.getBindingContext();
+                
+                oContext.bindContext("WholefoodsService."+sAction+"(...)",
+                oContext, {$$inheritExpandSelect : true})
+                    .execute("$auto", false, null)
             },
 
         });

@@ -20,7 +20,7 @@ service WholefoodsService {
     entity BPTpyes as projection on  wholefoods.Wholefoods.BPTpyes;
     
     entity Mard as projection on wholefoods.Wholefoods.Mard;
-    // @odata.draft.enabled:true
+    @odata.draft.enabled:true
     entity PO_Head as projection on wholefoods.Wholefoods.PO_Head;
 
     entity PO_Item as projection on wholefoods.Wholefoods.PO_Item;

@@ -83,7 +83,7 @@ context Wholefoods {
     entity PO_Item : managed {
         key ID: UUID @Core.Computed:true;
         EBELN : Association to PO_Head; //Purchasing Document Number
-        EBELP : String(10) @assert.range:['0010','0100']; //Item Number
+        EBELP : String(10);// @assert.range:['0010','0100']; //Item Number
         WERKS : Association to one Plants; // @mandatory; //Plant ID
         MATNR : Association to one Materials; // @mandatory; //raw Material ID
         MENGE : Integer; // @mandatory;// @assert.range:[1,1000];  // PO Quantity

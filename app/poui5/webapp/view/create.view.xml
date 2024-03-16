@@ -19,7 +19,7 @@
             title="{i18n>purchaseOrder}"
             id="headerTitle"
         />
-               <FlexBox
+        <FlexBox
             alignItems="Start"
             justifyContent="End"
             class="sapUiResponsiveMargin"
@@ -40,38 +40,54 @@
             class="sapUiResponsiveMargin"
             width="auto"
         >
-            <form:SimpleForm
+            <!-- <form:SimpleForm
                 ariaLabelledBy="objectPageTitle"
                 editable="false"
                 id="objectPage"
                 layout="ResponsiveGridLayout"
+            > -->
+            <FlexBox
+                alignItems="Start"
+                justifyContent="SpaceBetween"
+                class="sapUiResponsiveMargin"
             >
-                <Label text="{i18n>purchaseDocumentNumber}" />
-                <Text
-                    id="poid"
-                    text=""
-                />
-                <!-- <Input
+                <HBox width="50%">
+                    <Label
+                        text="{i18n>purchaseDocumentNumber}:"
+                        class="sapUiSmallMarginEnd"
+                        vAlign="Middle"
+                    />
+                    <Text
+                        id="poid"
+                        text=""
+                    />
+                    <!-- <Input
                     id="poid"
                     editable="true"
                     width="20rem"
                     valueLiveUpdate="true"
                 /> -->
-                <Label
-                    labelFor="bpid"
-                    text="{i18n>businessPartnerID}"
-                />
-                <ComboBox
-                    id="bpid"
-                    items='{ path: "/POVendor" }'
-                    width="20rem"
-                >
-                    <core:Item
-                        key="{PARTNER_PARTNER}"
-                        text="{PARTNER/NAME}"
+                </HBox>
+                <HBox width="50%">
+                    <Label
+                        labelFor="bpid"
+                        text="{i18n>businessPartnerID}:"
+                        class="sapUiSmallMarginEnd"
+                        vAlign="Middle"
                     />
-                </ComboBox>
-            </form:SimpleForm>
+                    <ComboBox
+                        id="bpid"
+                        items='{ path: "/POVendor" }'
+                        width="20rem"
+                    >
+                        <core:Item
+                            key="{PARTNER_PARTNER}"
+                            text="{PARTNER/NAME}"
+                        />
+                    </ComboBox>
+                </HBox>
+            </FlexBox>
+            <!-- </form:SimpleForm> -->
         </Panel>
         <Panel
             id="productItemsPanel"
@@ -138,10 +154,10 @@
             <OverflowToolbar>
                 <ToolbarSpacer />
                 <Button
-                    id="saveBtn"
-                    text="{i18n>save}"
+                    id="onCreatePOBtn"
+                    text="{i18n>create}"
                     type="Emphasized"
-                    press="onPressSaveBtn"
+                    press="onCreatePOBtn"
                 />
                 <Button
                     id="cancelBtn"

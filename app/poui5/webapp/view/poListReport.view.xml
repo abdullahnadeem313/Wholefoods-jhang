@@ -7,10 +7,17 @@
 >
     <Page
         id="page"
+        class= "sapUiResponsivePadding--header"
+        showSubHeader="true"
         title="{i18n>title}"
-        titleAlignment="Auto"
     >
         <content>
+            <!-- <ObjectHeader
+                id="oh1"
+                responsive="true"
+                backgroundDesign="Translucent"
+            >
+            </ObjectHeader> -->
             <Table
                 growing="true"
                 class="sapUiResponsiveMargin"
@@ -18,18 +25,16 @@
                 id="PurchaseOrderListID"
                 items="{path : '/PO_Head', 
                     sorter : {
-                        path : 'EBELN' ,
-                        group : false
-                    }	,
-                parameters: { 
-                    $expand : { 
-                        items : {
-							$select : ['EBELP', 'MATNR_MATNR',
-								'WERKS_WERKS','MENGE','UOM']
-						}},
-						$select : ['ID', 'PARTNER_PARTNER', 'EBELN'] ,
-						$$ownRequest : true
-					}}"
+                            path : 'EBELN' ,
+                            group : false
+                        }	,
+                    parameters: { 
+                        $count : true,
+							$filter :
+								'IsActiveEntity eq false or SiblingEntity/IsActiveEntity eq null',
+							$$getKeepAliveContext : true,
+							$$patchWithoutSideEffects : true}
+                    }"
                 mode="MultiSelect"
             >
                 <headerToolbar>

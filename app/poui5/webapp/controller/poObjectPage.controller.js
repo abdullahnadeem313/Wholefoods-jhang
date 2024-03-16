@@ -40,6 +40,53 @@ sap.ui.define([
                 let objHeader = this.byId("headerTitle");
                 objHeader.setTitle('items')
             },
+            onEdit : function () {
+                
+                this.toggleDraft("draftEdit");
+            },
+            onSave : function () {
+
+                this.toggleDraft("draftActivate");
+                // .then(function (oDraftContext) {
+                //     oDraftContext.delete(null);
+                // });
+            },
+            onCancel : function () {
+                var oDraftContext = this.getView().getBindingContext(),
+                    that = this;
+    
+                function gotoActiveContext(oActiveContext) {
+                    that.oActiveContext = null; // not needed anymore
+                    oDraftContext.delete("$auto", true);
+                    that.navTo(oActiveContext);
+                }
+    
+                if (this.oActiveContext) {
+                    oDraftContext.replaceWith(this.oActiveContext);
+                    gotoActiveContext(this.oActiveContext);
+                } else {
+                    oDraftContext.getModel().bindContext("PO_Item(...)", oDraftContext,
+                            {$$inheritExpandSelect : true})
+                        .execute("$auto", false, null, true).then(gotoActiveContext);
+                }
+            },
+            toggleDraft: function (sAction) {
+                var oObject = this.getView();
+                var oContext = oObject.getBindingContext();
+                var that = this;
+                var oRouter = this.getOwnerComponent().getRouter();
+                oContext.getModel().bindContext("WholefoodsService."+sAction+"(...)",
+                oContext, {$$inheritExpandSelect : true})
+                    .execute("$auto", false, null)
+                    .then(function (oDraftContext) {
+                        that.oContext = oContext; // remember for cancel
+                        
+                        let oPath = oDraftContext.sPath
+                        console.log(oPath);
+                        oRouter.navTo('TargetpoObjectPage',{poHead: oPath.substring("/PO_Head".length)})
+                        // that.getView().getModel().refresh()
+                    });
+            }
             // formatQuantity: function (value) {
             //     if (value || value === 0) {
             //         return parseFloat(value).toFixed(2);

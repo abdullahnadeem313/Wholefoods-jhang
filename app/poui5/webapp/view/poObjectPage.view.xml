@@ -1,4 +1,4 @@
-<mvc:View
+<mvc:View xmlns:core="sap.ui.core"
     controllerName="ns.poui5.controller.poObjectPage"
     class="sapUiSizeCompact"
     xmlns:form="sap.ui.layout.form"
@@ -7,7 +7,7 @@
     xmlns="sap.m"
 >
     <Page
-        id="page"
+        id="objectPage"
         title="{i18n>title}"
         showNavButton="true"
         navButtonPress=".onNavBack"
@@ -32,8 +32,8 @@
             />
             <Button
                 id="EDIT"
-                press="onPressEdit"
-                text="{i18n>Edit}"
+                press="onEdit"
+                text="{i18n>edit}"
                 type="Emphasized"
             />
         </FlexBox>
@@ -42,7 +42,33 @@
             class="sapUiResponsiveMargin"
             width="auto"
         >
-            <form:SimpleForm
+            <FlexBox
+                alignItems="Start"
+                justifyContent="SpaceBetween"
+                class="sapUiResponsiveMargin"
+            >
+                <HBox width="50%">
+                    <Label
+                        labelFor="poid"
+                        text="{i18n>purchaseDocumentNumber}:"
+                        class="sapUiSmallMarginEnd"
+                    />
+                    <Text text="{EBELN}" />
+                </HBox>
+                <HBox width="50%">
+                    <Label
+                        labelFor="bpid"
+                        text="{i18n>bussinesPartnerName}:"
+                        class="sapUiSmallMarginEnd"
+                    />
+                    <Text text="{PARTNER_PARTNER} ({PARTNER/NAME})" visible="{=%{IsActiveEntity} }" />
+                    <Select selectedKey="{PARTNER_PARTNER}" items="{ path:'/POVendor' }" visible="{=!%{IsActiveEntity} }">
+                        <core:Item key="{PARTNER_PARTNER}" text="{PARTNER/NAME}"></core:Item>
+                    </Select>
+                </HBox>
+            </FlexBox>
+        </Panel>
+        <!-- <form:SimpleForm
                 ariaLabelledBy="objectPageTitle"
                 editable="false"
                 id="objectPage"
@@ -53,26 +79,25 @@
                     text="Purchase Document Number"
                 />
                 <Text text="{EBELN}" />
-                <!-- <Input
+                <Input
                     id="poid"
                     editable="false"
                     width="50%"
                     value="{EBELN}"
-                /> -->
+                />
                 <Label
                     labelFor="bpid"
                     text="Business Partner ID"
                 />
-                <!-- <ObjectIdentifier text="{PARTNER_PARTNER} ({PARTNER/NAME})"></ObjectIdentifier> -->
                 <Text text="{PARTNER_PARTNER} ({PARTNER/NAME})" />
-                <!-- <Input
+                <ObjectIdentifier text="{PARTNER_PARTNER} ({PARTNER/NAME})"></ObjectIdentifier>
+                <Input
                     id="bpid"
                     editable="false"
                     width="50%"
                     value="{PARTNER_PARTNER}"
-                /> -->
-            </form:SimpleForm>
-        </Panel>
+                />
+            </form:SimpleForm> -->
         <Panel
             id="productItemsPanel"
             class="sapUiResponsiveMargin"
@@ -109,25 +134,65 @@
                     </Toolbar>
                 </headerToolbar>
                 <columns>
+                    <!-- Item Number -->
                     <Column>
                         <header>
                             <Text text="{i18n>itemNumber}" />
                         </header>
                     </Column>
-                    <Column minScreenWidth="Desktop">
+                    <!-- Active Plant ID -->
+                    <Column
+                        minScreenWidth="Desktop"
+                        visible="{=%{IsActiveEntity} }"
+                    >
                         <header>
                             <Text text="{i18n>plantID}" />
                         </header>
                     </Column>
-                    <Column minScreenWidth="Desktop">
+                    <!-- Draft Plant ID -->
+                    <Column
+                        minScreenWidth="Desktop"
+                        visible="{= !%{IsActiveEntity} }"
+                    >
+                        <header>
+                            <Text text="{i18n>plantID}" />
+                        </header>
+                    </Column>
+                    <!-- Active Material ID -->
+                    <Column
+                        minScreenWidth="Desktop"
+                        visible="{=%{IsActiveEntity} }"
+                    >
                         <header>
                             <Text text="{i18n>rawMaterialID}" />
                         </header>
                     </Column>
+                    <!-- Draft Material ID -->
+                    <Column
+                        minScreenWidth="Desktop"
+                        visible="{= !%{IsActiveEntity} }"
+                    >
+                        <header>
+                            <Text text="{i18n>rawMaterialID}" />
+                        </header>
+                    </Column>
+                    <!-- Active PO Quantity -->
                     <Column
                         hAlign="Right"
                         minScreenWidth="Desktop"
                         demandPopin="true"
+                        visible="{=%{IsActiveEntity} }"
+                    >
+                        <header>
+                            <Text text="{i18n>poQuantity}" />
+                        </header>
+                    </Column>
+                    <!-- Draft PO Quantity -->
+                    <Column
+                        hAlign="Right"
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                        visible="{= !%{IsActiveEntity} }"
                     >
                         <header>
                             <Text text="{i18n>poQuantity}" />
@@ -142,10 +207,36 @@
                                 title="{WERKS_WERKS}"
                                 text="{WERKS/NAME1}"
                             />
+                            <Select
+                                width="auto"
+                                items="{
+                                path: '/Plants',
+                                templateShareable: false
+                                }"
+                                selectedKey="{WERKS_WERKS}"
+                                >
+                                <core:Item
+                                    key="{WERKS}"
+                                    text="{NAME1}"
+                                />
+                            </Select>
                             <ObjectIdentifier
                                 title="{MATNR_MATNR}"
                                 text="{MATNR/MAKTX}"
                             />
+                            <Select
+                                width="auto"
+                                items="{
+                                path: '/rawMaterials',
+                                templateShareable: false
+                                }"
+                                selectedKey="{MATNR_MATNR}"
+                                >
+                                <core:Item
+                                    key="{MATNR}"
+                                    text="{MAKTX}"
+                                />
+                            </Select>
                             <!-- <Text text="{path: 'MENGE', formatter: '.formatQuantity'} {UOM}" /> -->
                             <ObjectNumber
                                 id="uomID"
@@ -159,10 +250,34 @@
                                 unit="{MATNR/UOM}"
                                 emphasized="false"
                             />
+                            <Input value="{MENGE}" ></Input>
                         </cells>
                     </ColumnListItem>
                 </items>
             </Table>
         </Panel>
+        <footer >
+            <OverflowToolbar visible="{= !%{IsActiveEntity} }">
+                <ToolbarSpacer />
+                <Button
+                    id="onCreatePOBtn"
+                    text="{i18n>save}"
+                    type="Emphasized"
+                    press="onSave"
+                />
+                <Button
+                    id="cancelBtn"
+                    text="{i18n>cancel}"
+                    class="sapUiTinyMargin"
+                    press="onCancel"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            closeOverflowOnInteraction="true"
+                        />
+                    </layoutData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
