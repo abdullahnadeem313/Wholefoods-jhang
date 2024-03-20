@@ -15,7 +15,9 @@ sap.ui.define([
 
                 // var oRouter = UIComponent.getRouterFor(this)
                 var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.getRoute("TargetpoObjectPage").attachPatternMatched(this.onRouteMachedFunc, this)
+                oRouter.getRoute("TargetpoObjectPage").attachPatternMatched(this.onRouteMachedFunc, this);
+
+                this.oActiveContext = null;
             },
 
             onRouteMachedFunc: function (oEvent) {
@@ -54,21 +56,32 @@ sap.ui.define([
             onCancel : function () {
                 var oDraftContext = this.getView().getBindingContext(),
                     that = this;
+                var oRouter = this.getOwnerComponent().getRouter();
     
                 function gotoActiveContext(oActiveContext) {
                     that.oActiveContext = null; // not needed anymore
                     oDraftContext.delete("$auto", true);
-                    that.navTo(oActiveContext);
+                    // that.navTo(oActiveContext);
+
+                    var oPath = oActiveContext.sPath 
+                    oRouter.navTo("TargetpoObjectPage", { poHead: oPath.substring("/".length) });
                 }
     
                 if (this.oActiveContext) {
-                    oDraftContext.replaceWith(this.oActiveContext);
+                    // oDraftContext.replaceWith(this.oActiveContext);
                     gotoActiveContext(this.oActiveContext);
-                } else {
+                } 
+                else {
                     oDraftContext.getModel().bindContext("PO_Item(...)", oDraftContext,
                             {$$inheritExpandSelect : true})
-                        .execute("$auto", false, null, true).then(gotoActiveContext);
+                        .execute("$auto", false, null).then(gotoActiveContext);
                 }
+            },
+            addItem : function () {
+                oNewItemContext = this.byId("poItemTable").getBinding("items").create();
+            },
+            deleteItem : function () {
+                this.byId("poItemTable").getSelectedItem().getBindingContext().delete();
             },
             toggleDraft: function (sAction) {
                 var oObject = this.getView();
@@ -79,7 +92,8 @@ sap.ui.define([
                 oContext, {$$inheritExpandSelect : true})
                     .execute("$auto", false, null)
                     .then(function (oDraftContext) {
-                        that.oContext = oContext; // remember for cancel
+                        that.oActiveContext
+						= oDraftContext.getProperty("IsActiveEntity") ? null : oContext; 
                         
                         let oPath = oDraftContext.sPath
                         console.log(oPath);

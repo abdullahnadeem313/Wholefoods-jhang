@@ -33,7 +33,9 @@
 							$filter :
 								'IsActiveEntity eq false or SiblingEntity/IsActiveEntity eq null',
 							$$getKeepAliveContext : true,
-							$$patchWithoutSideEffects : true}
+							$$patchWithoutSideEffects : true,
+                            $$updateGroupId: 'poTableGroup'
+                            }     
                     }"
                 mode="MultiSelect"
             >

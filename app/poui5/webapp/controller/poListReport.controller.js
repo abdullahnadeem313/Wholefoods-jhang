@@ -26,17 +26,39 @@ sap.ui.define([
             },
 
             onCreateOrder : function (oEvent) {
-                // var oItem = oEvent.getSource();
-                var oView = this.getView();
-                oPOtable = oView.byId("PurchaseOrderListID").getBinding("items");
+
+                var oContext= this.byId("PurchaseOrderListID").getBinding("items").create({EBELN: ''});
+                var oModel =this.getView().getModel();
+                var that = this;
+                var oRouter = that.getOwnerComponent().getRouter();
+                oModel.submitBatch("poTableGroup").then({
+                    function () {
+                        oPOtable = that.byId("PurchaseOrderListID")
+                        // var oBinding = oPOtable.getBinding("items");
+                        
+                        var oItem= oPOtable.getItems()[0].getBindingContext();
+                        console.log("oItem $$$", oItem);
+                        oRouter.navTo("TargetpoObjectPage", { poHead: oItem.sPath.substring("/PO_Head".length) });
+                    }
+                })
                 
-                // console.log("oPOtable$$$", oPOtable);
-
-                var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("Targetcreate");
-
-                // var oTable = this.byId("poItemTable");
-                // oTable.addItem(oItem);
+                
+                // var oRouter = this.getOwnerComponent().getRouter();
+                
+                // oContext.created().then(function () {
+                //     console.log("Sales Order created: " + oContext.getProperty("ID"));
+                //     // oContext.setKeepAlive(true, undefined, /*bRequestMessages*/ true);
+                //     if (oContext.isTransient()) {
+                //         this.getView().getModel("ui").setProperty("/oContext", oContext);
+                //         // oRouter.navTo("TargetpoObjectPage", {poHead : oContext.sPath.substring("/PO_Head".length)});
+                //         oRouter.navTo("TargetpoObjectPage", {poHead : oContext.getProperty("ID")});
+                //     } 
+                // }, function () {
+                //     // creation canceled
+                //     oRouter.navTo("TargetpoObjectPage",{poHead : oContext.getProperty("ID")});
+                // });
+                
+                
             },
             onFilterProducts(oEvent) {
                 // build filter array
@@ -124,10 +146,37 @@ sap.ui.define([
                 var oTable = this.byId("poItemTable");
                 oTable.addItem(oItem);
             },
+            onDeleteOrder : function () {
+                let oView = this.getView()
+                oPOtableView = oView.byId("PurchaseOrderListID");
+                let oPOtableContext = oPOtableView.getSelectedItem().getBindingContext();
+                console.log('oPOtableContext ###',oPOtableContext);
+                
+                oPOtableContext.delete("$auto").then(function () {
+                        // Purchase Order successfully deleted
+                        // MessageToast.show("Purchase Order deleted successfully");
+                   }, function (oError) {
+                        // do error handling
+                        // MessageToast.show("Error occurred while deleting Purchase Order");
+                   });
+            },
+            toggleDraft: function (sAction) {
+                var oObject = this.getView();
+                var oContext = oObject.getBindingContext();
+                
+                oContext.bindContext("WholefoodsService."+sAction+"(...)",
+                oContext, {$$inheritExpandSelect : true})
+                    .execute("$auto", false, null)
+            },
+            /**
+             * 
+             * Before draft create code
+             *  
+             */
+            /* 
             onCreatePOBtn: function (oEvent) {
                 var oView = this.getView();
                 // var oModel = oView.getModel();
-
 
                 var sBusinessPartnerID = this.byId("bpid").getSelectedItem().getKey();
 
@@ -175,29 +224,7 @@ sap.ui.define([
                 }
 
             },
-            onDeleteOrder : function () {
-                let oView = this.getView()
-                oPOtableView = oView.byId("PurchaseOrderListID");
-                let oPOtableContext = oPOtableView.getSelectedItem().getBindingContext();
-                console.log('oPOtableContext ###',oPOtableContext);
-                
-                oPOtableContext.delete("$auto").then(function () {
-                        // Purchase Order successfully deleted
-                        // MessageToast.show("Purchase Order deleted successfully");
-                   }, function (oError) {
-                        // do error handling
-                        // MessageToast.show("Error occurred while deleting Purchase Order");
-                   });
-            },
-            toggleDraft: function (sAction) {
-                var oObject = this.getView();
-                var oContext = oObject.getBindingContext();
-                
-                oContext.bindContext("WholefoodsService."+sAction+"(...)",
-                oContext, {$$inheritExpandSelect : true})
-                    .execute("$auto", false, null)
-            },
-
+             */
         });
     });
     

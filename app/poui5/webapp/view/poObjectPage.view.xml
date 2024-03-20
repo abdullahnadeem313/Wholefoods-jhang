@@ -49,7 +49,6 @@
             >
                 <HBox width="50%">
                     <Label
-                        labelFor="poid"
                         text="{i18n>purchaseDocumentNumber}:"
                         class="sapUiSmallMarginEnd"
                     />
@@ -57,7 +56,6 @@
                 </HBox>
                 <HBox width="50%">
                     <Label
-                        labelFor="bpid"
                         text="{i18n>bussinesPartnerName}:"
                         class="sapUiSmallMarginEnd"
                     />
@@ -105,8 +103,9 @@
         >
             <Table
                 growing="true"
-                id="PurchaseOrderDetail"
+                id="poItemTable"
                 items='{items}'
+                mode="MultiSelect"
             >
                 <headerToolbar>
                     <Toolbar>
@@ -118,18 +117,18 @@
                         <Button
                             icon="sap-icon://add"
                             id="create"
-                            press="onCreateOrder"
+                            press="addItem"
                             text="Add"
                             tooltip="Create Purchase Order"
-                            enabled="false"
+                            enabled="{= !%{IsActiveEntity} }"
                         />
                         <Button
                             icon="sap-icon://delete"
-                            id="delete"
-                            press="onDeleteOrder"
+                            id="deleteItems"
+                            press="deleteItem"
                             text="Delete"
                             tooltip="Delete Purchase Order"
-                            enabled="false"
+                            enabled="{= !%{IsActiveEntity} }"
                         />
                     </Toolbar>
                 </headerToolbar>
@@ -204,7 +203,7 @@
                         <cells>
                             <Text text="{EBELP}" />
                             <ObjectIdentifier
-                                title="{WERKS_WERKS}"
+                                title="ID: {WERKS_WERKS}"
                                 text="{WERKS/NAME1}"
                             />
                             <Select
@@ -221,7 +220,7 @@
                                 />
                             </Select>
                             <ObjectIdentifier
-                                title="{MATNR_MATNR}"
+                                title="ID: {MATNR_MATNR}"
                                 text="{MATNR/MAKTX}"
                             />
                             <Select
