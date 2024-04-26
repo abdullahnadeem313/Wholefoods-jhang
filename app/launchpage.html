@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <script>
+            window['sap-ushell-config'] = {
+                defaultRenderer: 'fiori2',
+                applications: {
+                    "bp_general-app": {
+                        title: 'Manage Business Partner General',
+                        description: 'Manage Business Partner General',
+                        applicationType: 'URL',
+                        url: "./bp_general/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "bp_types-app": {
+                        title: 'Manage Business Partner Types',
+                        description: 'Manage Business Partner Types',
+                        applicationType: 'URL',
+                        url: "./bp_types/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "bprofiles-app": {
+                        title: 'Manage Business Partner Roles',
+                        description: 'Manage Business Partner Roles',
+                        applicationType: 'URL',
+                        url: "./bprofiles/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "mard-app": {
+                        title: 'Manage Mard',
+                        description: 'Manage Mard',
+                        applicationType: 'URL',
+                        url: "./mard/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "material_groups-app": {
+                        title: 'Manage Material Groups',
+                        description: 'Manage Material Groups',
+                        applicationType: 'URL',
+                        url: "./material_groups/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "material_types-app": {
+                        title: 'Manage Material Types',
+                        description: 'Manage Material Types',
+                        applicationType: 'URL',
+                        url: "./material_types/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "materials-app": {
+                        title: 'Manage Materials',
+                        description: 'Manage Materials',
+                        applicationType: 'URL',
+                        url: "./materials/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "plants-app": {
+                        title: 'Manage Plants',
+                        description: 'Manage Plants',
+                        applicationType: 'URL',
+                        url: "./plants/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "po_head-app": {
+                        title: 'Manage Purchase Order',
+                        description: 'Manage Purchase Order',
+                        applicationType: 'URL',
+                        url: "./po_head/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "poui5-app": {
+                        title: 'Manage Purchase Order with UI5',
+                        description: 'Manage Purchase Order with UI5',
+                        additionalInformation: "SAPUI5.Component=ns.poui5",
+                        applicationType: 'URL',
+                        url: "./poui5/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "recipe_head-app": {
+                        title: 'Manage Recipe',
+                        description: 'Manage Recipe',
+                        applicationType: 'URL',
+                        url: "./recipe_head/webapp",
+                        navigationMode: 'embedded'
+                    },
+                    "roles-app": {
+                        title: 'Manage Roles',
+                        description: 'Manage Roles',
+                        applicationType: 'URL',
+                        url: "./roles/webapp",
+                        navigationMode: 'embedded'
+                    }
+            }
+        }
+        </script>
+        <script src="https://ui5.sap.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+        <script
+            src="https://ui5.sap.com/resources/sap-ui-core.js"
+            data-sap-ui-libs="sap.m, sap.ushell, sap.fe.templates"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-theme="sap_horizon"
+            data-sap-ui-frameOptions="allow"
+            data-sap-ui-bindingSyntax="complex"
+        ></script>
+        <script>
+            sap.ui.getCore().attachInit(function() {
+                sap.ushell.Container.createRenderer().placeAt('content');
+            });
+        </script>
+    </head>
+    <body class="sapUiBody" id="content"></body>
+</html>
